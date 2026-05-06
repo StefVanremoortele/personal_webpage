@@ -16,6 +16,23 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Docker
+
+Build and run the static production site with nginx:
+
+```bash
+docker build -t personal-webpage .
+docker run --rm -p 3000:80 personal-webpage
+```
+
+Or use Compose:
+
+```bash
+docker compose up --build
+```
+
+The container serves the exported Next.js site from `/usr/share/nginx/html` on port `80`; map it to whatever host port you want.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

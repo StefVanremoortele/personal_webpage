@@ -52,6 +52,23 @@ server {
 }
 ```
 
+## Docker
+
+The repository includes a production Docker image that builds the static export and serves it with nginx:
+
+```bash
+docker build -t personal-webpage .
+docker run -d --name personal-webpage --restart unless-stopped -p 8080:80 personal-webpage
+```
+
+For local/containerized deployment, Compose maps host port `3000` to container port `80`:
+
+```bash
+docker compose up -d --build
+```
+
+If putting this behind a host nginx reverse proxy, proxy to the mapped host port and keep TLS termination on the host.
+
 ## TLS
 
 `certbot --nginx -d stefvanremoortele.be -d www.stefvanremoortele.be` once after the DNS A/AAAA records are pointed at the VPS.
