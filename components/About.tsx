@@ -5,7 +5,7 @@ export function About() {
     <section id="about" className="px-6 py-20 sm:px-10">
       <div className="mx-auto grid w-full max-w-4xl gap-12 sm:grid-cols-[1fr_2fr]">
         <div>
-          <h2 className="text-sm uppercase tracking-[0.18em] text-foreground/50">About</h2>
+          <h2 className="text-sm uppercase tracking-[0.18em] text-[var(--accent)]">About</h2>
           <p className="mt-3 text-foreground/60">
             {profile.location}
             <br />
@@ -20,7 +20,7 @@ export function About() {
             {skills.map((s) => (
               <li
                 key={s}
-                className="rounded-full border border-foreground/15 px-3 py-1 text-xs text-foreground/70"
+                className="rounded-full border border-[color:var(--accent-border)] px-3 py-1 text-xs text-foreground/70"
               >
                 {s}
               </li>

@@ -5,16 +5,26 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --accent: #0f766e;
+  --accent-border: color-mix(in srgb, var(--accent) 24%, transparent);
+  --accent-border-strong: color-mix(in srgb, var(--accent) 42%, transparent);
+  --accent-contrast: #ffffff;
+  --accent-ring: color-mix(in srgb, var(--accent) 12%, transparent);
+  --accent-shadow: color-mix(in srgb, var(--accent) 20%, transparent);
+  --accent-soft: color-mix(in srgb, var(--accent) 4%, transparent);
 }
 
 .dark {
   --background: #0a0a0a;
   --foreground: #ededed;
+  --accent: #2dd4bf;
+  --accent-contrast: #042f2e;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

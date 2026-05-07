@@ -6,7 +6,7 @@ export function Hero() {
     <section className="relative flex min-h-[90vh] flex-col justify-center overflow-hidden px-6 py-24 sm:px-10">
       <HeroCanvasGate />
       <div className="pointer-events-none relative mx-auto w-full max-w-4xl [&_a]:pointer-events-auto">
-        <p className="mb-6 text-sm uppercase tracking-[0.18em] text-foreground/50">
+        <p className="mb-6 text-sm uppercase tracking-[0.18em] text-[var(--accent)]">
           {profile.title}
         </p>
         <h1 className="text-4xl font-semibold leading-[1.05] tracking-tight [overflow-wrap:anywhere] sm:text-6xl md:text-7xl">
@@ -20,13 +20,13 @@ export function Hero() {
             href={profile.calendly}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition hover:opacity-90"
+            className="inline-flex items-center rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-[var(--accent-contrast)] shadow-[0_8px_22px_var(--accent-shadow)] transition hover:opacity-90"
           >
             Book a 15-min call
           </a>
           <a
             href="#experience"
-            className="inline-flex items-center rounded-full border border-foreground/20 px-5 py-2.5 text-sm font-medium text-foreground transition hover:bg-foreground/5"
+            className="inline-flex items-center rounded-full border border-[color:var(--accent-border-strong)] px-5 py-2.5 text-sm font-medium text-foreground transition hover:bg-[var(--accent-soft)] hover:text-[var(--accent)]"
           >
             See experience
           </a>
