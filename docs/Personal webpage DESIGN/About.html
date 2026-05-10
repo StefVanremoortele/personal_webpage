@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Stef Vanremoortele — About</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #050505;
+    --fg: #f4f4f3;
+    --muted: #9ca0a3;
+    --dim: #6c6f72;
+    --accent: oklch(0.86 0.14 172);
+    --accent-soft: color-mix(in oklch, var(--accent) 18%, transparent);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font-family: "Manrope", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  .page { padding: 96px 88px; min-height: 100vh; }
+
+  .about {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 80px;
+    max-width: 1280px;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .years {
+    margin-top: 22px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .col-right p {
+    color: #c8c9ca;
+    font-size: 18px;
+    line-height: 1.65;
+    margin: 0 0 26px;
+    max-width: 720px;
+  }
+  .col-right p:first-child { margin-top: 0; }
+
+  .chips {
+    list-style: none;
+    padding: 0;
+    margin: 32px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+  }
+  .chips li {
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: 13px;
+    color: #d4d5d6;
+  }
+
+  /* ───── Ostend container shared */
+  .ost { color: var(--fg); }
+  .ost .dot {
+    display: inline-block;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--dim);
+    margin-right: 7px; vertical-align: 1px;
+  }
+  .ost .dot.live {
+    background: var(--accent);
+    box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 50%, transparent);
+    animation: pulseDot 2.2s ease-in-out infinite;
+  }
+  @keyframes pulseDot {
+    0%,100% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 50%, transparent); }
+    50%     { box-shadow: 0 0 0 6px transparent; }
+  }
+
+  /* ───── Coastline */
+  .ost-coast .ost-label,
+  .ost-coast .ost-line {
+    display: flex;
+    justify-content: space-between;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+  .ost-coast .ost-coord { color: var(--muted); }
+  .coast-svg { width: 100%; height: 110px; display: block; margin: 6px 0; }
+  .ost-coast .ost-line { margin-top: 4px; }
+  .ost-time {
+    margin-top: 18px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-family: "JetBrains Mono", monospace;
+  }
+  .ost-time .t { font-size: 22px; font-weight: 600; color: var(--fg); }
+  .ost-time .tz { font-size: 10px; letter-spacing: 0.18em; color: var(--dim); text-transform: uppercase; }
+
+  /* ───── Data */
+  .ost-data {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+  }
+  .ost-data .ost-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.08);
+  }
+  .ost-data .ost-row:last-child { border-bottom: none; }
+  .ost-data .k { color: var(--dim); letter-spacing: 0.16em; }
+  .ost-data .v { color: var(--fg); }
+  .ost-data .ost-divider {
+    height: 1px; background: rgba(255,255,255,0.08); margin: 8px 0;
+  }
+  .tide-row .v { gap: 1px; display: inline-flex; align-items: flex-end; height: 20px; }
+  .tide-bars { display: inline-flex; gap: 1px; align-items: flex-end; height: 20px; }
+  .tide-bars .bar {
+    width: 3px; background: var(--accent); opacity: 0.7;
+    transition: height 600ms ease;
+  }
+
+  /* ───── Radar */
+  .ost-radar { display: flex; flex-direction: column; align-items: flex-start; }
+  .radar-svg { width: 100%; max-width: 280px; height: auto; display: block; }
+  .radar-rotate {
+    transform-origin: 0 0;
+    animation: radarSweep 5s linear infinite;
+  }
+  @keyframes radarSweep {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  .ost-cap {
+    margin-top: 10px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.10em;
+  }
+
+  @media (max-width: 880px) {
+    .page { padding: 56px 24px; }
+    .about { grid-template-columns: 1fr; gap: 40px; }
+  }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="about.jsx"></script>
+</body>
+</html>

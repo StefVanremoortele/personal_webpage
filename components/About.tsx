@@ -1,16 +1,61 @@
-import { about, profile, skills } from "@/content/site";
+"use client";
+
+import { useEffect, useState } from "react";
+import { about, skills } from "@/content/site";
+
+const TZ = "Europe/Brussels";
+
+const timeFmt = new Intl.DateTimeFormat("en-GB", {
+  timeZone: TZ,
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: false,
+});
+const hourFmt = new Intl.DateTimeFormat("en-GB", {
+  timeZone: TZ,
+  hour: "2-digit",
+  hour12: false,
+});
+
+function DataReadout() {
+  const [now, setNow] = useState<Date | null>(null);
+
+  useEffect(() => {
+    setNow(new Date());
+    const id = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const time = now ? timeFmt.format(now) : "--:--:--";
+  const hour = now ? Number(hourFmt.format(now)) : 0;
+  const working = now !== null && hour >= 9 && hour < 18;
+
+  return (
+    <div className="font-mono text-xs">
+      <div className="border-b border-dashed border-white/10 py-[7px] text-[var(--fg)]">
+        Oostende, BE
+      </div>
+      <div
+        className="inline-flex items-center gap-2 py-[7px] text-[var(--fg)]"
+        suppressHydrationWarning
+      >
+        <span className={`live-dot ${working ? "" : "off"}`} aria-hidden />
+        {time} CET
+      </div>
+    </div>
+  );
+}
 
 export function About() {
   return (
     <section id="about" className="px-6 py-20 sm:px-10">
-      <div className="mx-auto grid w-full max-w-4xl gap-12 sm:grid-cols-[1fr_2fr]">
+      <div className="mx-auto grid w-full max-w-4xl gap-8 sm:grid-cols-[140px_1fr]">
         <div>
-          <h2 className="text-sm uppercase tracking-[0.18em] text-[var(--accent)]">About</h2>
-          <p className="mt-3 text-foreground/60">
-            {profile.location}
-            <br />
-            {profile.yearsExperience}+ years experience
-          </p>
+          <h2 className="mb-7 text-sm font-bold uppercase tracking-[0.22em] text-[var(--accent)]">
+            About
+          </h2>
+          <DataReadout />
         </div>
         <div className="space-y-5 text-foreground/80 leading-relaxed">
           {about.map((p, i) => (

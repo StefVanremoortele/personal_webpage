@@ -3,5 +3,5 @@ services:
     build: .
     image: personal-webpage:latest
     ports:
-      - "3000:80"
+      - "${DOCKER_PORT_PERSONAL_WEBPAGE}:80"
     restart: unless-stopped

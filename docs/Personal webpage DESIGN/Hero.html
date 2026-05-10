@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Stef Vanremoortele — Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #050505;
+    --bg-2: #0a0a0a;
+    --fg: #f4f4f3;
+    --muted: #9ca0a3;
+    --accent: oklch(0.86 0.14 172);
+    --glow: oklch(0.86 0.14 172 / 0.45);
+    --accent-gradient: linear-gradient(135deg, oklch(0.86 0.14 172), oklch(0.86 0.14 172));
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font-family: "Manrope", system-ui, -apple-system, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 96px 88px;
+    position: relative;
+    transition: --accent 600ms;
+    background:
+      radial-gradient(circle at 18% 50%, color-mix(in oklch, var(--accent) 8%, transparent) 0%, transparent 45%),
+      var(--bg);
+  }
+
+  .hero-inner {
+    max-width: 920px;
+    width: 100%;
+  }
+
+  /* Eyebrow with icon + rotating role */
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+    min-height: 44px;
+  }
+  .eyebrow-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px; height: 44px;
+    color: var(--accent);
+    transition: color 600ms ease;
+  }
+  .eyebrow:has(.role-stack:only-child) {
+    /* if icon slot is empty (None), still align cleanly */
+  }
+
+  .role-stack {
+    position: relative;
+    display: grid;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .role-word {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(2px);
+    transition: opacity 380ms cubic-bezier(.4,0,.2,1),
+                transform 380ms cubic-bezier(.4,0,.2,1),
+                filter 380ms,
+                background 600ms ease;
+    white-space: nowrap;
+    pointer-events: none;
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+  }
+  .role-word.is-active {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+
+  .title {
+    font-size: clamp(56px, 8vw, 120px);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin: 0 0 28px;
+    color: var(--fg);
+  }
+
+  .lede {
+    color: #c8c9ca;
+    font-size: 19px;
+    line-height: 1.6;
+    max-width: 640px;
+    margin: 0 0 40px;
+    font-weight: 400;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 52px;
+    padding: 0 26px;
+    border-radius: 999px;
+    font: inherit;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 350ms cubic-bezier(.4,0,.2,1);
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background-image: var(--accent-gradient);
+    background-color: var(--accent);
+    color: #0a0a0a;
+    box-shadow: 0 0 60px -10px var(--glow);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 0 80px -8px var(--glow); }
+  .btn-ghost {
+    border-color: color-mix(in oklch, var(--accent) 60%, transparent);
+    color: var(--fg);
+  }
+  .btn-ghost:hover { background: color-mix(in oklch, var(--accent) 12%, transparent); }
+
+  /* Subtle ambient pulse anchored to accent */
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 88% 12%, color-mix(in oklch, var(--accent) 6%, transparent) 0%, transparent 35%);
+    transition: background 600ms ease;
+  }
+
+  @media (max-width: 760px) {
+    .hero { padding: 56px 24px; }
+    .lede br { display: none; }
+  }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/flubber@0.4.2/build/flubber.min.js"></script>
+
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="hero.jsx"></script>
+</body>
+</html>

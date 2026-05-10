@@ -1,8 +1,11 @@
+export type Era = "dev" | "sec" | "agent";
+
 export type ExperienceEntry = {
   company: string;
   role: string;
   start: string;
   end: string;
+  era: Era;
   bullets: string[];
   reference?: string;
   highlight?: string;
@@ -61,6 +64,7 @@ export const experience: ExperienceEntry[] = [
     role: "IT Solutions Architect",
     start: "Jan 2026",
     end: "Mar 2026",
+    era: "agent",
     bullets: [
       "Provided high-level technical support and architectural oversight for active software projects — system stability, performance, alignment with business requirements.",
       "Spearheaded the integration of AI-driven coding tools and LLM workflows into the development lifecycle to accelerate delivery and modernize the engineering environment.",
@@ -72,6 +76,7 @@ export const experience: ExperienceEntry[] = [
     role: "IT Security & Compliance Engineer",
     start: "Jul 2023",
     end: "Jan 2026",
+    era: "sec",
     bullets: [
       "Improved security posture for a large media & advertising company, including an OT environment for magazine printing.",
       "Led application security and user-awareness campaigns; conditional access, IAM, and adherence to NIST / GDPR / NIS2 / ISO 27001/27005/27003.",
@@ -86,6 +91,7 @@ export const experience: ExperienceEntry[] = [
     role: "Software Engineer",
     start: "Nov 2022",
     end: "Jul 2023",
+    era: "dev",
     bullets: [
       "Built and maintained the back-end of a multi-tenant IoT platform on a gRPC microservices architecture.",
       "Designed for scale and fault-tolerance with replicated databases and multiple instances; HTTP and Kafka for inter-service communication.",
@@ -98,6 +104,7 @@ export const experience: ExperienceEntry[] = [
     role: "Software Engineer",
     start: "Jul 2021",
     end: "Sep 2022",
+    era: "dev",
     bullets: [
       "Built a physical identity & access management system for a startup using facial recognition powered by Intel RealSense Depth and Tracking cameras — back-end plus management and end-user interfaces.",
       "Proof-of-concept work on AI mesh programming, BLE communication, and SCORM-based e-learning modules.",
@@ -111,6 +118,7 @@ export const experience: ExperienceEntry[] = [
     role: "Software Engineer",
     start: "Nov 2020",
     end: "Jul 2021",
+    era: "dev",
     bullets: [
       "Built a cross-platform web application for the management team and pilots of an international aviation company with multiple bases worldwide.",
       "Focused on UX consistency and platform compatibility for the operational realities of aviation.",
@@ -122,6 +130,7 @@ export const experience: ExperienceEntry[] = [
     role: "Software Engineer",
     start: "Nov 2018",
     end: "Sep 2020",
+    era: "dev",
     bullets: [
       "Maintained and extended a PHP customer interface for mail tracking; built multi-threaded Python (Tkinter / PyQt) client-server apps for batch-processing handheld scanner data.",
       "Built an internal Python/Django + Angular platform integrating departments and streamlining business processes.",

@@ -12,13 +12,27 @@
   --accent-ring: color-mix(in srgb, var(--accent) 12%, transparent);
   --accent-shadow: color-mix(in srgb, var(--accent) 20%, transparent);
   --accent-soft: color-mix(in srgb, var(--accent) 4%, transparent);
+
+  /* Era palette */
+  --era-dev: oklch(0.86 0.14 172);
+  --era-sec: oklch(0.84 0.13 78);
+  --era-agent: oklch(0.78 0.16 305);
+  --era-agent-gradient: linear-gradient(120deg, oklch(0.82 0.17 282), oklch(0.72 0.22 318), oklch(0.78 0.18 350));
+
+  /* Booking / surface tokens */
+  --fg: var(--foreground);
+  --muted: #9ca0a3;
+  --dim: #6c6f72;
+  --line: rgba(0,0,0,0.08);
+  --glow: color-mix(in oklch, var(--accent) 45%, transparent);
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --accent: #2dd4bf;
-  --accent-contrast: #042f2e;
+  --background: #050505;
+  --foreground: #f4f4f3;
+  --accent: oklch(0.86 0.14 172);
+  --accent-contrast: #0a0a0a;
+  --line: rgba(255,255,255,0.08);
 }
 
 @theme inline {
@@ -35,6 +49,93 @@ html, body {
 }
 
 body {
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  /* TEMP: testing JetBrains Mono as the global font — revert this rule to use var(--font-sans). */
+  font-family: var(--font-jetbrains-mono), ui-monospace, "JetBrains Mono", monospace;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Rotating role eyebrow (Hero) */
+.role-stack {
+  position: relative;
+  display: grid;
+}
+.role-word {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateY(6px);
+  filter: blur(2px);
+  transition:
+    opacity 380ms cubic-bezier(.4,0,.2,1),
+    transform 380ms cubic-bezier(.4,0,.2,1),
+    filter 380ms,
+    background 600ms ease;
+  white-space: nowrap;
+  pointer-events: none;
+  background-image: var(--accent-gradient, linear-gradient(135deg, var(--accent), var(--accent)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.role-word.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Pulsing live dot (About data readout, Booking pill) */
+.live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 50%, transparent);
+  animation: pulseDot 2.2s ease-in-out infinite;
+}
+.live-dot.off {
+  background: var(--dim);
+  box-shadow: none;
+  animation: none;
+}
+@keyframes pulseDot {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 50%, transparent); }
+  50%      { box-shadow: 0 0 0 6px transparent; }
+}
+
+/* Experience timeline rail gradient */
+.exp-rail {
+  background: linear-gradient(
+    to bottom,
+    var(--era-agent) 0%,
+    var(--era-agent) 18%,
+    var(--era-sec)  35%,
+    var(--era-sec)  55%,
+    var(--era-dev)  75%,
+    var(--era-dev)  100%
+  );
+  opacity: 0.55;
+}
+
+.subtle-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.08) transparent;
+}
+.subtle-scrollbar::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}
+.subtle-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.subtle-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+}
+.subtle-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.16);
+}
+
+.era-glyph svg {
+  filter: drop-shadow(0 0 16px color-mix(in oklch, var(--accent) 35%, transparent));
+  transition: color 600ms ease;
 }
