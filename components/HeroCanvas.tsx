@@ -163,10 +163,10 @@ function cssColorToThree(css: string): THREE.Color {
   return new THREE.Color(r, g, b);
 }
 
-const BASE_DISPLACE = 0.04;
-const PULSE_DISPLACE = 0.18;
+const BASE_DISPLACE = 0;
+const PULSE_DISPLACE = 0;
 const PULSE_DURATION = 900; // ms
-const COLOR_CROSSFADE = 600; // ms
+const COLOR_CROSSFADE = 0; // ms
 
 function NameText({ text, accentColor, pulseSeq, onReady }: Props) {
   const { viewport, size, gl } = useThree();
