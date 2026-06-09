@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { profile } from "@/content/site";
-import { HeroCanvasGate, useHeroCanvasEnabled } from "./HeroCanvasGate";
 import { useMorphPath } from "./useMorphPath";
 
 const ROLES = [
@@ -73,8 +72,6 @@ function MorphIcon({ roleKey }: { roleKey: RoleKey }) {
 
 export function Hero() {
   const [idx, setIdx] = useState(0);
-  const canvasEnabled = useHeroCanvasEnabled();
-  const [canvasReady, setCanvasReady] = useState(false);
 
   useEffect(() => {
     const id = setInterval(() => setIdx((p) => (p + 1) % ROLES.length), ROTATE_MS);
@@ -82,7 +79,7 @@ export function Hero() {
   }, []);
 
   const role = ROLES[idx];
-  const heroText = `${profile.name}.`;
+  const heroText = profile.name;
 
   return (
     <section
@@ -95,12 +92,6 @@ export function Hero() {
         } as React.CSSProperties
       }
     >
-      <HeroCanvasGate
-        text={heroText}
-        accentColor={role.color}
-        pulseSeq={idx}
-        onReady={() => setCanvasReady(true)}
-      />
       <div className="pointer-events-none relative mx-auto w-full max-w-4xl [&_a]:pointer-events-auto">
         <div className="mb-8 flex items-center gap-3.5" style={{ minHeight: 44 }}>
           <span
@@ -122,10 +113,7 @@ export function Hero() {
         </div>
         <h1
           id="hero-name"
-          className={`text-4xl font-semibold leading-[1.05] tracking-tight [overflow-wrap:anywhere] transition-opacity duration-200 sm:text-6xl md:text-7xl ${
-            canvasEnabled && canvasReady ? "opacity-0" : "opacity-100"
-          }`}
-          aria-hidden={canvasEnabled && canvasReady}
+          className="text-4xl font-semibold leading-[1.05] tracking-tight [overflow-wrap:anywhere] sm:text-6xl md:text-7xl"
         >
           {heroText}
         </h1>

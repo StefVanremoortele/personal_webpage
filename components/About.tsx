@@ -9,7 +9,6 @@ const timeFmt = new Intl.DateTimeFormat("en-GB", {
   timeZone: TZ,
   hour: "2-digit",
   minute: "2-digit",
-  second: "2-digit",
   hour12: false,
 });
 const hourFmt = new Intl.DateTimeFormat("en-GB", {
@@ -19,17 +18,16 @@ const hourFmt = new Intl.DateTimeFormat("en-GB", {
 });
 
 function DataReadout() {
-  const [now, setNow] = useState<Date | null>(null);
+  const [now, setNow] = useState<Date>(() => new Date());
 
   useEffect(() => {
-    setNow(new Date());
-    const id = setInterval(() => setNow(new Date()), 1000);
+    const id = setInterval(() => setNow(new Date()), 60_000);
     return () => clearInterval(id);
   }, []);
 
-  const time = now ? timeFmt.format(now) : "--:--:--";
-  const hour = now ? Number(hourFmt.format(now)) : 0;
-  const working = now !== null && hour >= 9 && hour < 18;
+  const time = timeFmt.format(now);
+  const hour = Number(hourFmt.format(now));
+  const working = hour >= 9 && hour < 18;
 
   return (
     <div className="font-mono text-xs">

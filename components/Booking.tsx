@@ -11,6 +11,8 @@ const DOWS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"] as const;
 const MONTHS = [
   "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec",
 ] as const;
+const WHATSAPP_MESSAGE =
+  "Hi Stef, I found your portfolio and would like to discuss a possible collaboration.";
 
 type Day = {
   date: Date;
@@ -77,7 +79,6 @@ export function Booking() {
   const [selected, setSelected] = useState<string | null>(null);
 
   useEffect(() => {
-    setNow(new Date());
     const id = setInterval(() => setNow(new Date()), 60_000);
     return () => clearInterval(id);
   }, []);
@@ -88,6 +89,33 @@ export function Booking() {
     () => (activeDay ? slotsForDay(activeDay) : []),
     [activeDay],
   );
+  const whatsappHref = `${profile.whatsapp}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+  const contactOptions = [
+    {
+      eyebrow: "Fastest",
+      title: "WhatsApp",
+      body: "Send context, a quick question, or a short project brief.",
+      action: "Message me",
+      href: whatsappHref,
+      external: true,
+    },
+    {
+      eyebrow: "Async",
+      title: "Email",
+      body: "Best for longer briefs, documents, or a structured introduction.",
+      action: "Send email",
+      href: `mailto:${profile.email}`,
+      external: false,
+    },
+    {
+      eyebrow: "Focused",
+      title: "Calendar",
+      body: "Reserve 15 minutes when you already know a call is useful.",
+      action: "Pick a slot",
+      href: "#booking-calendar",
+      external: false,
+    },
+  ];
 
   function handleConfirm() {
     if (!selected || !activeDay) return;
@@ -110,11 +138,44 @@ export function Booking() {
           </h2>
           <p className="m-0 text-[18px] leading-[1.6] text-[#c8c9ca]">
             Open to senior software &amp; security roles, freelance engagements, and
-            architecture work. Easiest way to reach me is to grab 15 minutes on my calendar.
+            architecture work. Choose the route that fits the conversation: a quick
+            message, a longer note, or a focused 15-minute call.
           </p>
         </header>
 
+        <div className="mb-7 grid gap-3 md:grid-cols-3">
+          {contactOptions.map((option) => (
+            <a
+              key={option.title}
+              href={option.href}
+              target={option.external ? "_blank" : undefined}
+              rel={option.external ? "noopener noreferrer" : undefined}
+              className="group flex min-h-[172px] flex-col justify-between rounded-[18px] border border-[var(--line)] p-5 text-[var(--fg)] no-underline transition duration-300 hover:-translate-y-1 hover:border-[var(--accent)]"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.006))",
+              }}
+            >
+              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.26em] text-[var(--accent)]">
+                {option.eyebrow}
+              </span>
+              <div>
+                <h3 className="mb-2 text-[22px] font-bold tracking-[-0.02em]">
+                  {option.title}
+                </h3>
+                <p className="m-0 text-[14px] leading-[1.55] text-[var(--muted)]">
+                  {option.body}
+                </p>
+              </div>
+              <span className="mt-5 inline-flex text-[14px] font-semibold text-[var(--fg)] transition group-hover:text-[var(--accent)]">
+                {option.action} →
+              </span>
+            </a>
+          ))}
+        </div>
+
         <section
+          id="booking-calendar"
           className="rounded-[22px] border border-[var(--line)] p-5 sm:p-7"
           style={{
             background:
@@ -131,6 +192,9 @@ export function Booking() {
             >
               <span className="live-dot" aria-hidden />
               <span>Easy schedule this week</span>
+            </span>
+            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--dim)]">
+              15-minute calendar
             </span>
           </div>
 
@@ -250,7 +314,7 @@ export function Booking() {
                   </div>
                 )}
 
-                <div className="flex flex-row items-center justify-end gap-4 border-t border-[var(--line)] pt-4">
+                <div className="flex justify-end border-t border-[var(--line)] pt-4">
                   <button
                     type="button"
                     disabled={!selected}
@@ -277,12 +341,6 @@ export function Booking() {
                       ? `Confirm — ${activeDay.dow} ${activeDay.dayNum} ${activeDay.monthShort} · ${selected}`
                       : "Pick a time"}
                   </button>
-                  <a
-                    className="text-[14px] text-[var(--muted)] no-underline hover:text-[var(--accent)]"
-                    href={`mailto:${profile.email}`}
-                  >
-                    Or send an email →
-                  </a>
                 </div>
               </div>
             </div>
@@ -311,6 +369,14 @@ export function Booking() {
             className="no-underline hover:text-[var(--accent)]"
           >
             Email
+          </a>
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="no-underline hover:text-[var(--accent)]"
+          >
+            WhatsApp
           </a>
         </footer>
       </div>
