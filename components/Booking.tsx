@@ -204,27 +204,27 @@ export function Booking() {
   return (
     <section
       id="booking"
-      className="flex min-h-screen justify-center px-4 py-24 sm:px-8"
+      className="snap-section flex justify-center px-4 py-16 sm:px-8 sm:py-24"
     >
       <div className="w-full max-w-[1080px]">
-        <header className="mx-auto mb-12 max-w-[720px] text-center">
-          <h2 className="mb-5 text-[40px] font-extrabold leading-none tracking-[-0.03em] sm:text-6xl md:text-[72px]">
+        <header className="mx-auto mb-10 max-w-[720px] text-center sm:mb-12">
+          <h2 className="mb-5 text-[34px] font-extrabold leading-none tracking-[-0.03em] sm:text-6xl md:text-[72px]">
             Let&apos;s work together.
           </h2>
-          <p className="m-0 text-[18px] leading-[1.6] text-[#c8c9ca]">
+          <p className="m-0 text-base leading-[1.6] text-[#c8c9ca] sm:text-[18px]">
             Open to software &amp; security roles. Preferrably remote and freelance
             engagements, but open to discuss anything.
           </p>
         </header>
 
-        <div className="mb-7 grid gap-3 md:grid-cols-3">
+        <div className="mb-20 grid gap-3 sm:mb-24 md:mb-28 md:grid-cols-3">
           {contactOptions.map((option) => (
             <a
               key={option.title}
               href={option.href}
               target={option.external ? "_blank" : undefined}
               rel={option.external ? "noopener noreferrer" : undefined}
-              className="group flex min-h-[172px] flex-col rounded-[18px] border border-[var(--line)] p-5 text-[var(--fg)] no-underline transition duration-300 hover:-translate-y-1 hover:border-[var(--accent)]"
+              className="group flex min-h-[154px] flex-col rounded-[18px] border border-[var(--line)] p-4 text-[var(--fg)] no-underline transition duration-300 hover:-translate-y-1 hover:border-[var(--accent)] sm:min-h-[172px] sm:p-5"
               style={{
                 background:
                   "linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.006))",
@@ -233,12 +233,12 @@ export function Booking() {
               <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.26em] text-[var(--accent)]">
                 {option.eyebrow}
               </span>
-              <div className="mt-8 flex items-stretch gap-4">
-                <span className="flex min-h-16 w-16 shrink-0 items-center justify-center rounded-[16px] bg-[var(--accent)] text-[#0a0a0a] shadow-[0_0_46px_-12px_var(--glow)] ring-1 ring-white/20 transition duration-300 group-hover:scale-[1.04]">
+              <div className="mt-6 flex items-stretch gap-3 sm:mt-8 sm:gap-4">
+                <span className="flex min-h-14 w-14 shrink-0 items-center justify-center rounded-[14px] bg-[var(--accent)] text-[#0a0a0a] shadow-[0_0_46px_-12px_var(--glow)] ring-1 ring-white/20 transition duration-300 group-hover:scale-[1.04] sm:min-h-16 sm:w-16 sm:rounded-[16px]">
                   <option.Icon className="h-8 w-8" />
                 </span>
                 <div className="min-w-0">
-                  <h3 className="mb-2 text-[22px] font-bold tracking-[-0.02em]">
+                  <h3 className="mb-2 text-xl font-bold tracking-[-0.02em] sm:text-[22px]">
                     {option.title}
                   </h3>
                   <p className="m-0 text-[14px] leading-[1.55] text-[var(--muted)]">
@@ -246,7 +246,7 @@ export function Booking() {
                   </p>
                 </div>
               </div>
-              <span className="mt-auto inline-flex pt-6 text-[14px] font-semibold text-[var(--fg)] transition group-hover:text-[var(--accent)]">
+              <span className="mt-auto inline-flex pt-5 text-[14px] font-semibold text-[var(--fg)] transition group-hover:text-[var(--accent)] sm:pt-6">
                 {option.action} →
               </span>
             </a>
@@ -255,7 +255,7 @@ export function Booking() {
 
         <section
           id="booking-calendar"
-          className="rounded-[22px] border border-[var(--line)] p-5 sm:p-7"
+          className="rounded-[18px] border border-[var(--line)] p-4 sm:rounded-[22px] sm:p-7"
           style={{
             background:
               "linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.005))",
@@ -280,7 +280,7 @@ export function Booking() {
           {activeDay ? (
             <div suppressHydrationWarning>
               <div
-                className="subtle-scrollbar mb-7 flex gap-1.5 overflow-x-auto pb-[1.3em]"
+                className="subtle-scrollbar mb-6 flex gap-1.5 overflow-x-auto pb-[1.3em] sm:mb-7"
                 style={{ scrollSnapType: "x mandatory" }}
               >
                 {days.map((d, i) => {
@@ -295,7 +295,7 @@ export function Booking() {
                         setActiveDayIdx(i);
                         setSelected(null);
                       }}
-                      className={`relative flex min-h-[108px] flex-[0_0_82px] flex-col items-center justify-start gap-1 rounded-[14px] border px-1.5 pt-2 pb-3 text-[var(--fg)] transition-all duration-200 ${
+                      className={`relative flex min-h-[102px] flex-[0_0_76px] flex-col items-center justify-start gap-1 rounded-[14px] border px-1.5 pt-2 pb-3 text-[var(--fg)] transition-all duration-200 sm:min-h-[108px] sm:flex-[0_0_82px] ${
                         isActive
                           ? "bg-[color-mix(in_oklch,var(--accent)_12%,transparent)]"
                           : ""
@@ -360,7 +360,7 @@ export function Booking() {
                     className="mb-6 grid gap-2"
                     style={{
                       gridTemplateColumns:
-                        "repeat(auto-fill, minmax(110px, 1fr))",
+                        "repeat(auto-fill, minmax(96px, 1fr))",
                     }}
                   >
                     {slots.map((s) => {
@@ -393,40 +393,55 @@ export function Booking() {
                   </div>
                 )}
 
-                <div className="flex justify-end border-t border-[var(--line)] pt-4">
-                  <button
-                    type="button"
-                    disabled={!selected}
-                    onClick={handleConfirm}
-                    className="rounded-full border px-6 py-3.5 text-[15px] font-semibold transition-all duration-300 disabled:cursor-not-allowed"
-                    style={
-                      selected
-                        ? {
-                            background: "var(--accent)",
-                            color: "#0a0a0a",
-                            borderColor: "var(--accent)",
-                            boxShadow: "0 0 60px -10px var(--glow)",
-                          }
-                        : {
-                            background:
-                              "color-mix(in oklch, var(--accent) 14%, transparent)",
-                            borderColor:
-                              "color-mix(in oklch, var(--accent) 30%, transparent)",
-                            color: "var(--muted)",
-                          }
-                    }
-                  >
-                    {selected
-                      ? `Confirm — ${activeDay.dow} ${activeDay.dayNum} ${activeDay.monthShort} · ${selected}`
-                      : "Pick a time"}
-                  </button>
+                <div className="flex justify-stretch border-t border-[var(--line)] pt-4 sm:justify-end">
+                  <div className="relative flex w-full justify-end sm:w-auto">
+                    {selected && (
+                      <span className="absolute bottom-[calc(100%+12px)] left-1/2 w-[min(260px,calc(100vw-48px))] -translate-x-1/2 rounded-[12px] border border-[color:var(--accent-border)] bg-[var(--background)] px-3 py-2 text-center text-[12px] leading-[1.4] text-[var(--fg)] shadow-[0_0_36px_-16px_var(--glow)] after:absolute after:left-1/2 after:top-full after:h-3 after:w-3 after:-translate-x-1/2 after:-translate-y-1/2 after:rotate-45 after:border-b after:border-r after:border-[color:var(--accent-border)] after:bg-[var(--background)] sm:left-auto sm:right-0 sm:w-[260px] sm:translate-x-0 sm:text-right sm:after:left-auto sm:after:right-8 sm:after:translate-x-0">
+                        Booking confirmation is not implemented yet.
+                      </span>
+                    )}
+                    <button
+                      type="button"
+                      disabled={!selected}
+                      onClick={handleConfirm}
+                      className="w-full max-w-full rounded-full border px-4 py-3.5 text-center text-[14px] font-semibold leading-snug transition-all duration-300 disabled:cursor-not-allowed sm:w-auto sm:px-6 sm:text-[15px]"
+                      style={
+                        selected
+                          ? {
+                              background: "var(--accent)",
+                              color: "#0a0a0a",
+                              borderColor: "var(--accent)",
+                              boxShadow: "0 0 60px -10px var(--glow)",
+                            }
+                          : {
+                              background:
+                                "color-mix(in oklch, var(--accent) 14%, transparent)",
+                              borderColor:
+                                "color-mix(in oklch, var(--accent) 30%, transparent)",
+                              color: "var(--muted)",
+                            }
+                      }
+                    >
+                      {selected ? (
+                        <>
+                          <span className="sm:hidden">Confirm {selected}</span>
+                          <span className="hidden sm:inline">
+                            Confirm - {activeDay.dow} {activeDay.dayNum}{" "}
+                            {activeDay.monthShort} · {selected}
+                          </span>
+                        </>
+                      ) : (
+                        "Pick a time"
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           ) : null}
         </section>
 
-        <footer className="mt-14 flex flex-wrap justify-center gap-8 text-[14px] text-[var(--muted)]">
+        <footer className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3 text-[13px] text-[var(--muted)] sm:mt-14 sm:gap-8 sm:text-[14px]">
           <a
             href={profile.github}
             target="_blank"

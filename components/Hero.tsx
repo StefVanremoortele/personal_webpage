@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { profile } from "@/content/site";
 import { useMorphPath } from "./useMorphPath";
@@ -84,7 +85,8 @@ export function Hero() {
 
   return (
     <section
-      className="relative flex min-h-[90vh] flex-col justify-center overflow-hidden px-6 py-24 sm:px-10"
+      id="hero"
+      className="snap-section relative flex flex-col justify-center overflow-hidden px-5 py-16 sm:px-10 sm:py-24"
       style={
         {
           "--accent": role.color,
@@ -94,7 +96,7 @@ export function Hero() {
       }
     >
       <div className="pointer-events-none relative mx-auto w-full max-w-4xl [&_a]:pointer-events-auto">
-        <div className="mb-8 flex items-center gap-3.5" style={{ minHeight: 44 }}>
+        <div className="mb-7 flex items-center gap-3 sm:mb-8 sm:gap-3.5" style={{ minHeight: 44 }}>
           <span
             className="inline-flex h-11 w-11 items-center justify-center"
             style={{ color: role.color, transition: "color 600ms ease" }}
@@ -102,7 +104,7 @@ export function Hero() {
             <MorphIcon roleKey={role.key} />
           </span>
           <div
-            className="role-stack text-sm font-bold uppercase tracking-[0.22em]"
+            className="role-stack text-[11px] font-bold uppercase tracking-[0.16em] sm:text-sm sm:tracking-[0.22em]"
             style={{ color: role.color }}
           >
             {ROLES.map((r, i) => (
@@ -112,22 +114,24 @@ export function Hero() {
             ))}
           </div>
         </div>
-        <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+        <div className="flex flex-col gap-7 md:flex-row md:items-start md:justify-between">
           <div className="min-w-0">
             <h1
               id="hero-name"
-              className="text-4xl font-semibold leading-[1.05] tracking-tight [overflow-wrap:anywhere] sm:text-6xl md:text-7xl"
+              className="text-[2.5rem] font-semibold leading-[1.05] tracking-tight [overflow-wrap:anywhere] sm:text-6xl md:text-7xl"
             >
               {heroText}
             </h1>
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-foreground/75 sm:text-xl">
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-foreground/75 sm:mt-8 sm:text-xl">
               {profile.tagline}
             </p>
           </div>
-          <div className="pointer-events-auto mx-auto aspect-square w-28 shrink-0 overflow-hidden rounded-full sm:w-32 md:mx-0 md:w-[clamp(92px,8vw,128px)]">
-            <img
+          <div className="pointer-events-auto relative mx-auto aspect-square w-24 shrink-0 overflow-hidden rounded-full sm:w-32 md:mx-0 md:w-[clamp(92px,8vw,128px)]">
+            <Image
               src={AVATAR_SRC}
               alt={profile.name}
+              fill
+              sizes="(min-width: 768px) 128px, 128px"
               className="h-full w-full object-cover object-[50%_22%]"
             />
           </div>
@@ -135,7 +139,7 @@ export function Hero() {
         <div className="mt-10 flex flex-wrap gap-3">
           <a
             href="#booking"
-            className="inline-flex h-[52px] min-w-[190px] items-center justify-center rounded-full px-8 text-sm font-semibold hover:-translate-y-px"
+            className="inline-flex h-[52px] w-full max-w-xs items-center justify-center rounded-full px-8 text-sm font-semibold hover:-translate-y-px sm:w-auto"
             style={{
               backgroundImage: role.gradient,
               backgroundColor: role.color,

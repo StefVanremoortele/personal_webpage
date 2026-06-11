@@ -47,15 +47,15 @@ function DataReadout() {
 
 export function About() {
   return (
-    <section id="about" className="px-6 py-20 sm:px-10">
-      <div className="mx-auto grid w-full max-w-4xl gap-8 sm:grid-cols-[140px_1fr]">
+    <section id="about" className="snap-section flex flex-col justify-center px-5 py-16 sm:px-10 sm:py-20">
+      <div className="mx-auto grid w-full max-w-4xl gap-6 sm:grid-cols-[140px_1fr] sm:gap-8">
         <div>
-          <h2 className="mb-7 text-sm font-bold uppercase tracking-[0.22em] text-[var(--accent)]">
+          <h2 className="mb-5 text-sm font-bold uppercase tracking-[0.22em] text-[var(--accent)] sm:mb-7">
             About
           </h2>
           <DataReadout />
         </div>
-        <div className="space-y-5 text-foreground/80 leading-relaxed">
+        <div className="space-y-4 text-[15px] leading-relaxed text-foreground/80 sm:space-y-5 sm:text-base">
           {about.map((p, i) => (
             <p key={i}>{p}</p>
           ))}

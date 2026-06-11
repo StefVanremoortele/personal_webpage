@@ -3,7 +3,7 @@ import { projects } from "@/content/site";
 export function Projects() {
   if (projects.length === 0) return null;
   return (
-    <section id="projects" className="px-6 py-20 sm:px-10">
+    <section id="projects" className="snap-section flex flex-col justify-center px-5 py-16 sm:px-10 sm:py-20">
       <div className="mx-auto w-full max-w-4xl">
         <h2 className="text-sm uppercase tracking-[0.18em] text-[var(--accent)]">Open source</h2>
         <ul className="mt-8 grid gap-4 sm:grid-cols-2">

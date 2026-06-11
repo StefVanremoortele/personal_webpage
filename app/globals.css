@@ -46,12 +46,44 @@
 html, body {
   background: var(--background);
   color: var(--foreground);
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 0;
+  scroll-snap-type: y proximity;
 }
 
 body {
   /* TEMP: testing JetBrains Mono as the global font — revert this rule to use var(--font-sans). */
   font-family: var(--font-jetbrains-mono), ui-monospace, "JetBrains Mono", monospace;
   -webkit-font-smoothing: antialiased;
+}
+
+.snap-section {
+  min-height: 100svh;
+  scroll-margin-top: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+
+@media (min-width: 768px) and (min-height: 720px) {
+  html {
+    scroll-snap-type: y mandatory;
+  }
+
+  .snap-section {
+    scroll-snap-stop: always;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+    scroll-snap-type: y proximity;
+  }
 }
 
 /* Rotating role eyebrow (Hero) */

@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { experience, type Era } from "@/content/site";
 import { useMorphPath } from "./useMorphPath";
 
@@ -84,42 +83,16 @@ function EraIndicator({ activeEra }: { activeEra: Era }) {
   );
 }
 
-function Entry({
-  entry,
-  idx,
-  onIntersect,
-}: {
-  entry: (typeof experience)[number];
-  idx: number;
-  onIntersect: (idx: number) => void;
-}) {
-  const ref = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) onIntersect(idx);
-        });
-      },
-      { rootMargin: "-35% 0px -60% 0px", threshold: 0 },
-    );
-    obs.observe(node);
-    return () => obs.disconnect();
-  }, [idx, onIntersect]);
-
+function Entry({ entry }: { entry: (typeof experience)[number] }) {
   const era = ERAS[entry.era];
   const dotBg = era.gradient ?? era.color;
 
   return (
     <article
-      ref={ref}
-      className="relative pb-16 last:pb-0"
+      className="relative"
       style={{ "--accent": era.color } as React.CSSProperties}
     >
-      <span className="absolute -left-[28px] top-[10px] h-[14px] w-[14px]">
+      <span className="absolute -left-[24px] top-[9px] h-[14px] w-[14px] sm:-left-[28px] sm:top-[10px]">
         <span
           className="absolute -inset-1.5 rounded-full"
           style={{
@@ -135,49 +108,32 @@ function Entry({
         />
       </span>
 
-      <header className="mb-1 flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1">
-        <h3 className="text-[22px] font-bold tracking-[-0.01em]">
-          {entry.role}{" "}
-          <span className="font-medium text-[var(--muted)]">@ {entry.company}</span>
-        </h3>
-        <span className="font-mono text-xs tracking-[0.06em] whitespace-nowrap text-[var(--muted)]">
+      <header className="mb-1 flex flex-wrap items-start justify-between gap-x-5 gap-y-2">
+        <div>
+          <h3 className="text-xl font-bold tracking-[-0.01em] sm:text-[22px]">
+            {entry.role}
+          </h3>
+          <p className="mt-1 text-[15px] font-medium text-[var(--muted)] sm:text-[17px]">
+            {entry.company}
+          </p>
+        </div>
+        <span className="font-mono text-[11px] tracking-[0.06em] whitespace-nowrap text-[var(--muted)] sm:text-xs">
           {entry.start} — {entry.end}
         </span>
       </header>
 
       <div
-        className="mb-3.5 mt-1 font-mono text-[10px] uppercase tracking-[0.28em]"
+        className="mb-3 mt-2 font-mono text-[9px] uppercase tracking-[0.2em] sm:mb-3.5 sm:mt-1 sm:text-[10px] sm:tracking-[0.28em]"
         style={{ color: era.color, transition: "color 600ms ease" }}
       >
         {era.label}
       </div>
 
-      <ul className="space-y-3 text-[16px] leading-[1.6] text-foreground/80">
+      <ul className="space-y-2.5 text-[15px] leading-[1.55] text-foreground/80 sm:space-y-3 sm:text-[16px] sm:leading-[1.6]">
         {entry.bullets.map((b, j) => (
           <li key={j}>{b}</li>
         ))}
       </ul>
-
-      {(entry.highlight || entry.reference) && (
-        <p className="mt-2.5 text-sm text-[var(--muted)]">
-          {entry.highlight && (
-            <span className="mr-3">
-              <span className="font-semibold" style={{ color: era.color }}>
-                Highlight:
-              </span>{" "}
-              {entry.highlight}
-            </span>
-          )}
-          {entry.reference && (
-            <span>
-              <span className="font-semibold" style={{ color: era.color }}>
-                Reference:
-              </span>{" "}
-              {entry.reference}
-            </span>
-          )}
-        </p>
-      )}
     </article>
   );
 }
@@ -205,38 +161,48 @@ function buildRailGradient(): string {
 }
 
 export function Experience() {
-  const [activeIdx, setActiveIdx] = useState(0);
-  const activeEra = experience[activeIdx]?.era ?? "agent";
   const railBg = buildRailGradient();
 
   return (
-    <section id="experience" className="px-6 py-20 sm:px-10">
-      <div className="mx-auto grid w-full max-w-4xl gap-8 sm:grid-cols-[140px_1fr]">
-        <aside className="sm:sticky sm:top-[calc(var(--spacing)*50)] sm:self-start">
-          <div
-            className="mb-7 text-center text-sm font-bold uppercase tracking-[0.22em] transition-colors duration-500"
-            style={{ color: ERAS[activeEra].color }}
-          >
-            Experience
-          </div>
-          <EraIndicator activeEra={activeEra} />
-        </aside>
+    <>
+      {experience.map((entry, i) => {
+        const era = ERAS[entry.era];
 
-        <div className="relative pl-7">
-          <div
-            className="absolute left-[6px] top-2 bottom-2 w-px opacity-55"
-            style={{ background: railBg }}
-          />
-          {experience.map((entry, i) => (
-            <Entry
-              key={`${entry.company}-${entry.start}`}
-              entry={entry}
-              idx={i}
-              onIntersect={setActiveIdx}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
+        return (
+          <section
+            key={`${entry.company}-${entry.start}`}
+            id={i === 0 ? "experience" : `experience-${i + 1}`}
+            className="snap-section flex flex-col justify-center px-5 py-12 sm:px-10 sm:py-16"
+            aria-label={`Experience ${i + 1} of ${experience.length}: ${entry.role} at ${entry.company}`}
+          >
+            <div className="mx-auto grid w-full max-w-4xl gap-5 sm:grid-cols-[140px_1fr] sm:gap-8">
+              <aside className="flex items-start justify-between gap-4 sm:block sm:self-start">
+                <div
+                  className="text-sm font-bold uppercase tracking-[0.22em] transition-colors duration-500 sm:mb-3 sm:text-center"
+                  style={{ color: era.color }}
+                >
+                  Experience
+                </div>
+                <div className="text-right font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--dim)] sm:text-center">
+                  {String(i + 1).padStart(2, "0")} /{" "}
+                  {String(experience.length).padStart(2, "0")}
+                </div>
+                <div className="hidden sm:block">
+                  <EraIndicator activeEra={entry.era} />
+                </div>
+              </aside>
+
+              <div className="relative pl-6 sm:pl-7">
+                <div
+                  className="absolute left-[5px] top-2 bottom-2 w-px opacity-55 sm:left-[6px]"
+                  style={{ background: railBg }}
+                />
+                <Entry entry={entry} />
+              </div>
+            </div>
+          </section>
+        );
+      })}
+    </>
   );
 }
