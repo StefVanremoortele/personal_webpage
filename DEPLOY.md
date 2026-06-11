@@ -2,7 +2,34 @@
 
 Static site, served by nginx on a VPS.
 
-## Build & sync
+## Build & publish on tryptamine
+
+On tryptamine:
+
+```bash
+cd /home/stef/projects/personal_webpage
+npm run deploy:tryptamine
+```
+
+The script installs from `package-lock.json`, builds the static export, publishes `out/` to `/var/www/stefvanremoortele.be`, restores SELinux labels, tests nginx, and reloads nginx.
+
+If dependencies are already installed and you only changed source files:
+
+```bash
+SKIP_INSTALL=1 npm run deploy:tryptamine
+```
+
+tryptamine is a small VPS. If `npm ci` fails with `spawn ENOMEM`, add swap and retry:
+
+```bash
+sudo fallocate -l 2G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+```
+
+## Build & sync from another machine
 
 ```bash
 DEPLOY_HOST=stef@my.vps DEPLOY_PATH=/var/www/stefvanremoortele.be ./scripts/deploy.sh
