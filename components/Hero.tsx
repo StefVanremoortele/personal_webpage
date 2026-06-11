@@ -39,6 +39,7 @@ const MORPH_PATHS: Record<RoleKey, string> = {
 };
 
 const ROTATE_MS = 2600;
+const AVATAR_SRC = "/avatar_me.png";
 
 function MorphIcon({ roleKey }: { roleKey: RoleKey }) {
   const ref = useMorphPath(MORPH_PATHS, roleKey, 650);
@@ -111,19 +112,30 @@ export function Hero() {
             ))}
           </div>
         </div>
-        <h1
-          id="hero-name"
-          className="text-4xl font-semibold leading-[1.05] tracking-tight [overflow-wrap:anywhere] sm:text-6xl md:text-7xl"
-        >
-          {heroText}
-        </h1>
-        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-foreground/75 sm:text-xl">
-          {profile.tagline}
-        </p>
+        <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+          <div className="min-w-0">
+            <h1
+              id="hero-name"
+              className="text-4xl font-semibold leading-[1.05] tracking-tight [overflow-wrap:anywhere] sm:text-6xl md:text-7xl"
+            >
+              {heroText}
+            </h1>
+            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-foreground/75 sm:text-xl">
+              {profile.tagline}
+            </p>
+          </div>
+          <div className="pointer-events-auto mx-auto aspect-square w-28 shrink-0 overflow-hidden rounded-full sm:w-32 md:mx-0 md:w-[clamp(92px,8vw,128px)]">
+            <img
+              src={AVATAR_SRC}
+              alt={profile.name}
+              className="h-full w-full object-cover object-[50%_22%]"
+            />
+          </div>
+        </div>
         <div className="mt-10 flex flex-wrap gap-3">
           <a
             href="#booking"
-            className="inline-flex h-[52px] items-center rounded-full px-6 text-sm font-semibold hover:-translate-y-px"
+            className="inline-flex h-[52px] min-w-[190px] items-center justify-center rounded-full px-8 text-sm font-semibold hover:-translate-y-px"
             style={{
               backgroundImage: role.gradient,
               backgroundColor: role.color,
@@ -133,17 +145,7 @@ export function Hero() {
                 "background-color 600ms ease, background-image 600ms ease, box-shadow 600ms ease, transform 350ms cubic-bezier(.4,0,.2,1)",
             }}
           >
-            Book a 15-min call
-          </a>
-          <a
-            href="#experience"
-            className="inline-flex h-[52px] items-center rounded-full border px-6 text-sm font-semibold text-foreground"
-            style={{
-              borderColor: `color-mix(in oklch, ${role.color} 60%, transparent)`,
-              transition: "border-color 600ms ease, background-color 350ms ease",
-            }}
-          >
-            See experience
+            Get in contact
           </a>
         </div>
       </div>

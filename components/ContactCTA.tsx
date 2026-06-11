@@ -18,7 +18,7 @@ export function ContactCTA() {
             rel="noopener noreferrer"
             className="inline-flex items-center rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-[var(--accent-contrast)] shadow-[0_8px_22px_var(--accent-shadow)] transition hover:opacity-90"
           >
-            Book a 15-min call
+            Get in contact
           </a>
           <a
             href={`mailto:${profile.email}`}
