@@ -212,8 +212,8 @@ export function Booking() {
             Let&apos;s work together.
           </h2>
           <p className="m-0 text-[18px] leading-[1.6] text-[#c8c9ca]">
-            Open to senior software &amp; security roles, freelance engagements, and
-            architecture work.
+            Open to software &amp; security roles. Preferrably remote and freelance
+            engagements, but open to discuss anything.
           </p>
         </header>
 
