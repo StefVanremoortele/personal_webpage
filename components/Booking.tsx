@@ -213,8 +213,7 @@ export function Booking() {
           </h2>
           <p className="m-0 text-[18px] leading-[1.6] text-[#c8c9ca]">
             Open to senior software &amp; security roles, freelance engagements, and
-            architecture work. Choose the route that fits the conversation: a quick
-            message, a longer note, or a focused 15-minute call.
+            architecture work.
           </p>
         </header>
 
