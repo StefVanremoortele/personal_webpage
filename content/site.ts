@@ -28,7 +28,7 @@ export const profile = {
   location: "Oostende, Belgium",
   availability: "Available in Flanders (Belgium)",
   yearsExperience: 7,
-  email: "stefvanremoortele@gmail.com",
+  email: "stefvanremoortele.io@gmail.com",
   phone: "+32 474 019 394",
   whatsapp: "https://wa.me/32474019394",
   calendly: "https://calendly.com/stefvanremoortele/15min",
