@@ -129,15 +129,6 @@ export function Hero({ currentNow }: HeroProps) {
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-foreground/75 sm:mt-8 sm:text-xl">
               {profile.tagline}
             </p>
-            {currentNow && (
-              <a
-                href="/now"
-                className="mt-5 inline-flex items-center gap-2 rounded-full border border-[color:var(--accent-border)] px-3.5 py-1.5 text-xs text-foreground/70 transition hover:border-[color:var(--accent-border-strong)] hover:text-foreground sm:mt-6"
-              >
-                <span className="live-dot" aria-hidden />
-                Currently exploring: {currentNow.topic}
-              </a>
-            )}
           </div>
           <div className="pointer-events-auto relative mx-auto aspect-square w-24 shrink-0 overflow-hidden rounded-full sm:w-32 md:mx-0 md:w-[clamp(92px,8vw,128px)]">
             <Image
@@ -152,18 +143,28 @@ export function Hero({ currentNow }: HeroProps) {
         <div className="mt-10 flex flex-wrap gap-3">
           <a
             href="#booking"
-            className="inline-flex h-[52px] w-full max-w-xs items-center justify-center rounded-full px-8 text-sm font-semibold hover:-translate-y-px sm:w-auto"
+            className="inline-flex h-[52px] w-full max-w-xs items-center justify-center rounded-full px-8 text-sm font-semibold hover:-translate-y-1.5 sm:w-auto"
             style={{
               backgroundImage: role.gradient,
               backgroundColor: role.color,
               color: "#0a0a0a",
-              boxShadow: `0 0 60px -10px ${role.glow}`,
+              boxShadow: `0 12px 30px -8px ${role.glow}, 0 0 50px -14px ${role.glow}`,
               transition:
-                "background-color 600ms ease, background-image 600ms ease, box-shadow 600ms ease, transform 350ms cubic-bezier(.4,0,.2,1)",
+                "background-color 600ms ease, background-image 600ms ease, box-shadow 600ms ease, transform 250ms cubic-bezier(.4,0,.2,1)",
             }}
           >
             Get in contact
           </a>
+          {currentNow && (
+            <a
+              href="/now"
+              className="inline-flex h-[52px] items-center gap-2 rounded-full border border-[color:var(--accent-border)] bg-foreground/5 px-5 text-xs text-foreground/70 transition hover:-translate-y-1.5 hover:border-[color:var(--accent-border-strong)] hover:text-foreground"
+            >
+              <span className="live-dot" aria-hidden />
+              Currently exploring: {currentNow.topic}
+              <span aria-hidden>&rarr;</span>
+            </a>
+          )}
         </div>
       </div>
     </section>
