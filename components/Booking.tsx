@@ -253,14 +253,7 @@ export function Booking() {
           ))}
         </div>
 
-        <section
-          id="booking-calendar"
-          className="rounded-[18px] border border-[var(--line)] p-4 sm:rounded-[22px] sm:p-7"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.005))",
-          }}
-        >
+        <section id="booking-calendar">
           <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
             <span
               className="inline-flex items-center gap-2 rounded-full border px-3.5 py-[7px] text-[13px] text-[var(--fg)]"
@@ -440,39 +433,6 @@ export function Booking() {
             </div>
           ) : null}
         </section>
-
-        <footer className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3 text-[13px] text-[var(--muted)] sm:mt-14 sm:gap-8 sm:text-[14px]">
-          <a
-            href={profile.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="no-underline hover:text-[var(--accent)]"
-          >
-            GitHub
-          </a>
-          <a
-            href={profile.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="no-underline hover:text-[var(--accent)]"
-          >
-            LinkedIn
-          </a>
-          <a
-            href={`mailto:${profile.email}`}
-            className="no-underline hover:text-[var(--accent)]"
-          >
-            Email
-          </a>
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="no-underline hover:text-[var(--accent)]"
-          >
-            WhatsApp
-          </a>
-        </footer>
       </div>
     </section>
   );
