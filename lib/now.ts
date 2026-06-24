@@ -1,53 +1,36 @@
-import fs from "node:fs";
-import path from "node:path";
-import type { ComponentType } from "react";
-import type { NowMetadata } from "@/content/site";
+import { nowItems, type NowItem } from "@/content/now.config";
+import type { NowStatus } from "@/content/site";
 
-export type NowEntry = {
-  slug: string;
-  metadata: NowMetadata;
-  Body: ComponentType;
-};
-
-const NOW_DIR = path.join(process.cwd(), "content", "now");
-
-export async function getAllNowEntries(): Promise<NowEntry[]> {
-  const slugs = fs
-    .readdirSync(NOW_DIR)
-    .filter((f) => f.endsWith(".mdx"))
-    .map((f) => f.replace(/\.mdx$/, ""));
-
-  return Promise.all(
-    slugs.map(async (slug) => {
-      const mod = await import(`@/content/now/${slug}.mdx`);
-      return { slug, metadata: mod.metadata as NowMetadata, Body: mod.default as ComponentType };
-    }),
-  );
-}
+export type { NowItem };
+export type NowGroup = { status: NowStatus; entries: NowItem[] };
 
 // Descending by `start`; "" sorts last; ties broken alphabetically by slug.
-function sortByStartDesc(entries: NowEntry[]): NowEntry[] {
-  return [...entries].sort((a, b) => {
-    const aStart = a.metadata.start || "";
-    const bStart = b.metadata.start || "";
+function sortByStartDesc(items: NowItem[]): NowItem[] {
+  return [...items].sort((a, b) => {
+    const aStart = a.start || "";
+    const bStart = b.start || "";
     if (aStart !== bStart) return aStart < bStart ? 1 : -1;
     return a.slug.localeCompare(b.slug);
   });
 }
 
-export function getCurrentEntries(entries: NowEntry[]) {
-  return sortByStartDesc(entries.filter((e) => e.metadata.status === "current"));
+export function getCurrentEntries(items: NowItem[] = nowItems): NowItem[] {
+  return sortByStartDesc(items.filter((e) => e.status === "current"));
 }
 
-export function getUpcomingEntries(entries: NowEntry[]) {
-  return sortByStartDesc(entries.filter((e) => e.metadata.status === "upcoming"));
-}
-
-export function getPastEntries(entries: NowEntry[]) {
-  return sortByStartDesc(entries.filter((e) => e.metadata.status === "past"));
+// Entries grouped into a single chronological timeline: upcoming first,
+// then what's current, then past. Empty groups are dropped.
+export function getNowGroups(items: NowItem[] = nowItems): NowGroup[] {
+  const order: NowStatus[] = ["upcoming", "current", "past"];
+  return order
+    .map((status) => ({
+      status,
+      entries: sortByStartDesc(items.filter((e) => e.status === status)),
+    }))
+    .filter((group) => group.entries.length > 0);
 }
 
 // Single most-recent "current" entry for the Hero badge, or null.
-export function getHeroBadgeEntry(entries: NowEntry[]): NowEntry | null {
-  return getCurrentEntries(entries)[0] ?? null;
+export function getHeroBadgeEntry(items: NowItem[] = nowItems): NowItem | null {
+  return getCurrentEntries(items)[0] ?? null;
 }

@@ -53,6 +53,12 @@ html, body {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 0;
+}
+
+/* Only snap on pages that actually have snap sections (the home page).
+   Other routes (e.g. /now) share the Footer's scroll-snap-align but must
+   not snap, otherwise the page jumps to the footer on load. */
+html:has(.snap-section) {
   scroll-snap-type: y proximity;
 }
 
@@ -70,7 +76,7 @@ body {
 }
 
 @media (min-width: 768px) and (min-height: 720px) {
-  html {
+  html:has(.snap-section) {
     scroll-snap-type: y mandatory;
   }
 
@@ -82,6 +88,9 @@ body {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  html:has(.snap-section) {
     scroll-snap-type: y proximity;
   }
 }
@@ -132,6 +141,24 @@ body {
 @keyframes pulseDot {
   0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 50%, transparent); }
   50%      { box-shadow: 0 0 0 6px transparent; }
+}
+
+/* Pulsing "Right now" node on the /now timeline. Keeps its background ring
+   while a soft accent halo pulses outward. */
+.now-node-live {
+  animation: nowNodePulse 2.2s ease-in-out infinite;
+}
+@keyframes nowNodePulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 3px var(--background),
+      0 0 0 0 color-mix(in oklch, var(--accent) 55%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 0 3px var(--background),
+      0 0 0 7px transparent;
+  }
 }
 
 /* Experience timeline rail gradient */

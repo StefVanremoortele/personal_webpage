@@ -4,16 +4,15 @@ import { Experience } from "@/components/Experience";
 import { Projects } from "@/components/Projects";
 import { Booking } from "@/components/Booking";
 import { Footer } from "@/components/Footer";
-import { getAllNowEntries, getHeroBadgeEntry } from "@/lib/now";
+import { getHeroBadgeEntry } from "@/lib/now";
 
-export default async function Home() {
-  const nowEntries = await getAllNowEntries();
-  const heroBadge = getHeroBadgeEntry(nowEntries);
+export default function Home() {
+  const heroBadge = getHeroBadgeEntry();
 
   return (
     <>
       <main className="flex-1">
-        <Hero currentNow={heroBadge ? { topic: heroBadge.metadata.topic } : null} />
+        <Hero currentNow={heroBadge ? { topic: heroBadge.topic } : null} />
         <About />
         <Experience />
         <Projects />
