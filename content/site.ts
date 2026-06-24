@@ -2,14 +2,6 @@ export type Era = "dev" | "sec" | "agent";
 
 export type NowStatus = "past" | "current" | "upcoming";
 
-export type NowMetadata = {
-  topic: string;
-  era: Era;
-  status: NowStatus;
-  period: string;
-  start: string;
-};
-
 export type ExperienceEntry = {
   company: string;
   role: string;
