@@ -234,7 +234,7 @@ export function Booking() {
                 {option.eyebrow}
               </span>
               <div className="mt-6 flex items-stretch gap-3 sm:mt-8 sm:gap-4">
-                <span className="flex min-h-14 w-14 shrink-0 items-center justify-center rounded-[14px] bg-[var(--accent)] text-[#0a0a0a] shadow-[0_0_46px_-12px_var(--glow)] ring-1 ring-white/20 transition duration-300 group-hover:scale-[1.04] sm:min-h-16 sm:w-16 sm:rounded-[16px]">
+                <span className="flex min-h-14 w-14 shrink-0 items-center justify-center rounded-[14px] bg-[var(--accent)] text-[var(--accent-contrast)] shadow-[0_0_46px_-12px_var(--glow)] ring-1 ring-white/20 transition duration-300 group-hover:scale-[1.04] sm:min-h-16 sm:w-16 sm:rounded-[16px]">
                   <option.Icon className="h-8 w-8" />
                 </span>
                 <div className="min-w-0">
@@ -305,7 +305,7 @@ export function Booking() {
                         className="rounded-[4px] px-1.5 py-0.5 font-mono text-[8px] font-bold tracking-[0.22em]"
                         style={{
                           background: d.isToday ? "var(--accent)" : "transparent",
-                          color: d.isToday ? "#0a0a0a" : "transparent",
+                          color: d.isToday ? "var(--accent-contrast)" : "transparent",
                         }}
                       >
                         TODAY
@@ -369,7 +369,7 @@ export function Booking() {
                             background: isSel
                               ? "var(--accent)"
                               : "transparent",
-                            color: isSel ? "#0a0a0a" : "var(--fg)",
+                            color: isSel ? "var(--accent-contrast)" : "var(--fg)",
                             boxShadow: isSel
                               ? "0 0 30px -10px var(--glow)"
                               : "none",
@@ -402,7 +402,7 @@ export function Booking() {
                         selected
                           ? {
                               background: "var(--accent)",
-                              color: "#0a0a0a",
+                              color: "var(--accent-contrast)",
                               borderColor: "var(--accent)",
                               boxShadow: "0 0 60px -10px var(--glow)",
                             }

@@ -28,7 +28,7 @@ export const profile = {
   tagline:
     "Backend-oriented software engineer with an education in security, building reliable applications where architecture, security, and UX hold together.",
   location: "Oostende, Belgium",
-  availability: "Available in Flanders (Belgium)",
+  availability: "Based in Flanders, Belgium — open to local roles and remote-friendly positions across the EU.",
   yearsExperience: 7,
   email: "stefvanremoortele.io@gmail.com",
   phone: "+32 474 019 394",
