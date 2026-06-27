@@ -76,11 +76,11 @@ function RailNode({ status }: { status: NowStatus }) {
 function NowCard({ item, showPeriod }: { item: NowItem; showPeriod: boolean }) {
   return (
     <article className="rounded-[18px] border border-[var(--line)] p-5 sm:p-6">
-      <header className="mb-3 flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
-        <h3 className="text-lg font-bold tracking-[-0.01em] sm:text-xl">{item.topic}</h3>
+      <header className="mb-3 flex items-start justify-between gap-x-4">
+        <h3 className="min-w-0 text-lg font-bold tracking-[-0.01em] sm:text-xl">{item.topic}</h3>
         {showPeriod && (
           <span
-            className="font-mono text-[11px] tracking-[0.06em] whitespace-nowrap"
+            className="shrink-0 font-mono text-[11px] tracking-[0.06em] whitespace-nowrap"
             style={{ color: dateColor }}
           >
             {item.period}
@@ -192,7 +192,7 @@ export default function NowPage() {
 
   return (
     <>
-      <main className="flex-1 px-5 py-16 sm:px-10 sm:py-24" style={{ zoom: 0.8 }}>
+      <main className="flex-1 px-5 py-16 sm:px-10 sm:py-24">
         <div className="mx-auto w-full max-w-2xl">
           <Link
             href="/"
