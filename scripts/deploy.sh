@@ -10,7 +10,7 @@
 
 set -euo pipefail
 
-DEPLOY_HOST="${DEPLOY_HOST:-stef@tryptramine}"
+DEPLOY_HOST="${DEPLOY_HOST:-stef@tryptamine}"
 DEPLOY_PATH="${DEPLOY_PATH:-/var/www/stefvanremoortele.be}"
 
 cd "$(dirname "$0")/.."
