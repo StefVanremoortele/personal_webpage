@@ -8,17 +8,17 @@ export function ContactCTA() {
           Let&apos;s work together.
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-foreground/70">
-          Open to senior software & security roles, freelance engagements, and architecture work.
-          Easiest way to reach me is to grab 15 minutes on my calendar.
+          Freelance project work and architecture engagements are especially welcome.
+          Reach out to discuss a practical way to work together.
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <a
-            href={profile.calendly}
+            href={`${profile.whatsapp}?text=${encodeURIComponent("Hi Stef, I found your portfolio and would like to discuss a possible collaboration.")}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-[var(--accent-contrast)] shadow-[0_8px_22px_var(--accent-shadow)] transition hover:opacity-90"
           >
-            Get in contact
+            Message on WhatsApp
           </a>
           <a
             href={`mailto:${profile.email}`}
