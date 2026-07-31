@@ -30,10 +30,9 @@ export const profile = {
   location: "Oostende, Belgium",
   availability: "Based in Flanders, Belgium — open to local roles and remote-friendly positions across the EU.",
   yearsExperience: 7,
-  email: "stefvanremoortele.io@gmail.com",
+  email: "svanremoortele@gmail.com",
   phone: "+32 474 019 394",
   whatsapp: "https://wa.me/32474019394",
-  calendly: "https://calendly.com/stefvanremoortele/15min",
   github: "https://github.com/StefVanremoortele",
   linkedin: "https://www.linkedin.com/in/stefvanremoortele/",
 };
