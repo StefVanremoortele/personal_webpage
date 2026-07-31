@@ -13,14 +13,14 @@ import { getNowGroups, type NowGroup, type NowItem } from "@/lib/now";
 export const metadata: Metadata = {
   title: "Now — Stef Vanremoortele",
   description:
-    "What I'm currently exploring, what's planned next, and what I've researched in the past — AI workflows, dev tooling, security topics, and general tinkering.",
+    "What I'm currently exploring, what's planned next, and what I've researched in the past — AI-assisted coding workflows, dev tooling, security topics, and general tinkering.",
   alternates: { canonical: `${siteUrl}/now` },
 };
 
 const ERAS: Record<Era, { label: string; color: string }> = {
   dev: { label: "DEVELOPMENT", color: "var(--era-dev)" },
   sec: { label: "SECURITY", color: "var(--era-sec)" },
-  agent: { label: "AI AGENTIC", color: "var(--era-agent)" },
+  agent: { label: "AI-ASSISTED CODING", color: "var(--era-agent)" },
 };
 
 const RAIL_COLOR = "color-mix(in srgb, var(--muted) 65%, transparent)";
@@ -205,8 +205,8 @@ export default function NowPage() {
             Now
           </h1>
           <p className="mb-20 max-w-2xl text-base leading-relaxed text-foreground/75 sm:mb-28 sm:text-lg">
-            A running log of what I&apos;m researching, tinkering with, and thinking about — AI
-            workflows, dev tooling, security, and whatever else pulls focus.
+            A running log of what I&apos;m researching, tinkering with, and thinking about — AI-assisted
+            coding workflows, dev tooling, security, and whatever else pulls focus.
           </p>
 
           <section aria-label="Timeline">

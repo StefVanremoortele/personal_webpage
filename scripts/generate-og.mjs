@@ -4,7 +4,7 @@ import sharp from "sharp";
 import { writeFileSync } from "node:fs";
 
 const NAME = "Stef Vanremoortele";
-const TITLE = "Software Developer & Security Specialist";
+const TITLE = "Software Engineer & Security Specialist";
 const escapeXml = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const URL = "stefvanremoortele.be";
 
@@ -21,7 +21,7 @@ const svg = `
   <circle cx="240" cy="520" r="120" fill="#262626" opacity="0.5"/>
   <text x="80" y="170" fill="#9ca3af" font-family="system-ui, -apple-system, sans-serif" font-size="22" letter-spacing="4" font-weight="500">${escapeXml(TITLE.toUpperCase())}</text>
   <text x="80" y="320" fill="#ededed" font-family="system-ui, -apple-system, sans-serif" font-size="92" font-weight="600">${NAME}.</text>
-  <text x="80" y="400" fill="#9ca3af" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="400">Backend-first. Security-minded. Soft spot for clean UX.</text>
+  <text x="80" y="400" fill="#9ca3af" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="400">Backend-first. Security-minded. Built for trust.</text>
   <text x="80" y="560" fill="#6b7280" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="500">${URL}</text>
 </svg>
 `;

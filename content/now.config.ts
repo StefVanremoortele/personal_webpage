@@ -32,7 +32,7 @@ export const nowItems: NowItem[] = [
     period: "Q2 2026 – present",
     start: "2026-04",
     blurb:
-      "Building automated review loops where one agent's output is checked and critiqued by another before it reaches me, to catch mistakes earlier and raise the bar on AI-generated code.",
+      "Building automated review loops where AI-assisted coding output is checked and critiqued by another agent before it reaches me, to catch mistakes earlier and raise the bar on assisted code.",
   },
   {
     slug: "ai-repository-context",
@@ -42,7 +42,7 @@ export const nowItems: NowItem[] = [
     period: "Q2 2026 – present",
     start: "2026-04",
     blurb:
-      "Exploring how to feed coherent, up-to-date repo context to coding agents (memory, CLAUDE.md-style instructions, retrieval) so they stop re-deriving things I already know.",
+      "Exploring how to give AI-assisted coding tools coherent, up-to-date repo context (memory, CLAUDE.md-style instructions, retrieval) so they stop re-deriving things I already know.",
   },
   {
     slug: "harness-engineering-agent-loops",
@@ -52,7 +52,7 @@ export const nowItems: NowItem[] = [
     period: "Q2 2026 – present",
     start: "2026-04",
     blurb:
-      "Designing the surrounding harness — tools, guardrails, permissions — that determines whether an autonomous coding agent is useful or dangerous.",
+      "Designing the surrounding harness for AI-assisted coding — tools, guardrails, permissions — that determines whether an autonomous coding agent is useful or dangerous.",
   },
   {
     slug: "spec-driven",

@@ -8,7 +8,7 @@ import { useMorphPath } from "./useMorphPath";
 const ROLES = [
   {
     key: "dev",
-    label: "Software Developer",
+    label: "Software Engineer",
     color: "oklch(0.86 0.14 172)",
     glow: "oklch(0.86 0.14 172 / 0.45)",
     gradient: "linear-gradient(135deg, oklch(0.86 0.14 172), oklch(0.86 0.14 172))",
@@ -153,7 +153,7 @@ export function Hero({ currentNow }: HeroProps) {
                 "background-color 600ms ease, background-image 600ms ease, box-shadow 600ms ease, transform 250ms cubic-bezier(.4,0,.2,1)",
             }}
           >
-            Get in contact
+            Discuss a project
           </a>
           {currentNow && (
             <a
