@@ -19,7 +19,7 @@
   --era-agent: oklch(0.78 0.16 305);
   --era-agent-gradient: linear-gradient(120deg, oklch(0.82 0.17 282), oklch(0.72 0.22 318), oklch(0.78 0.18 350));
 
-  /* Booking / surface tokens */
+  /* Contact / surface tokens */
   --fg: var(--foreground);
   --muted: #9ca0a3;
   --dim: #6c6f72;
@@ -121,26 +121,6 @@ body {
   opacity: 1;
   transform: translateY(0);
   filter: blur(0);
-}
-
-/* Pulsing live dot (About data readout, Booking pill) */
-.live-dot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 50%, transparent);
-  animation: pulseDot 2.2s ease-in-out infinite;
-}
-.live-dot.off {
-  background: var(--dim);
-  box-shadow: none;
-  animation: none;
-}
-@keyframes pulseDot {
-  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 50%, transparent); }
-  50%      { box-shadow: 0 0 0 6px transparent; }
 }
 
 /* Pulsing "Right now" node on the /now timeline. Keeps its background ring

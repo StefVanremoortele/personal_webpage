@@ -1,3 +1,4 @@
+// Archived design prototype. Current public experience copy lives in content/site.ts.
 // Experience timeline with era-coded entries (DEV → SEC → AGENT).
 // Older entries marked [placeholder] — replace with real history.
 const { useState, useEffect, useRef } = React;

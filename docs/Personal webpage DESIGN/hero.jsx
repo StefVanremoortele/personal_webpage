@@ -1,3 +1,4 @@
+// Archived design prototype. Current public identity copy lives in content/site.ts.
 // Hero with rotating role + morphing icon
 const { useState, useEffect, useRef, useMemo } = React;
 
