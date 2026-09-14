@@ -7,7 +7,7 @@ const ERAS: Record<Era, { label: string; color: string; gradient?: string }> = {
   dev: { label: "DEVELOPMENT", color: "var(--era-dev)" },
   sec: { label: "SECURITY", color: "var(--era-sec)" },
   agent: {
-    label: "AI AGENTIC",
+    label: "AI-ASSISTED CODING",
     color: "var(--era-agent)",
     gradient: "var(--era-agent-gradient)",
   },
