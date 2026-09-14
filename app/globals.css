@@ -123,6 +123,26 @@ body {
   filter: blur(0);
 }
 
+/* Pulsing live dot (About data readout, Hero status) */
+.live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 50%, transparent);
+  animation: pulseDot 2.2s ease-in-out infinite;
+}
+.live-dot.off {
+  background: var(--dim);
+  box-shadow: none;
+  animation: none;
+}
+@keyframes pulseDot {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 50%, transparent); }
+  50%      { box-shadow: 0 0 0 6px transparent; }
+}
+
 /* Pulsing "Right now" node on the /now timeline. Keeps its background ring
    while a soft accent halo pulses outward. */
 .now-node-live {
