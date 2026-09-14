@@ -22,7 +22,7 @@ const ROLES = [
   },
   {
     key: "agent",
-    label: "Agentic Orchestrator",
+    label: "AI-Assisted Engineer",
     color: "oklch(0.78 0.16 305)",
     glow: "oklch(0.74 0.20 325 / 0.55)",
     gradient:
