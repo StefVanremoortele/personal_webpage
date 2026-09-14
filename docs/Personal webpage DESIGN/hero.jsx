@@ -1,11 +1,13 @@
 // Archived design prototype. Current public identity copy lives in content/site.ts.
 // Hero with rotating role + morphing icon
-const { useState, useEffect, useRef, useMemo } = React;
+const { useState, useEffect, useRef } = React;
+// Hero.html loads tweaks-panel.jsx first, which exposes these helpers on window.
+const { TweaksPanel, TweakSection, TweakRadio, TweakToggle, TweakSlider } = window;
 
 const ROLES = [
   {
     key: "dev",
-    label: "Software Developer",
+    label: "Software Engineer",
     color: "oklch(0.86 0.14 172)",   // mint (existing brand)
     glow: "oklch(0.86 0.14 172 / 0.45)",
     gradient: "linear-gradient(135deg, oklch(0.86 0.14 172), oklch(0.86 0.14 172))",
@@ -19,7 +21,7 @@ const ROLES = [
   },
   {
     key: "agent",
-    label: "Agentic Orchestrator",
+    label: "AI-Assisted Engineer",
     color: "oklch(0.78 0.16 305)",   // violet / AI (mid-stop, used for icon stroke)
     glow: "oklch(0.74 0.20 325 / 0.55)",
     // rich purple → magenta gradient for AI
@@ -39,21 +41,21 @@ const MORPH_OUTER = [
 
 function useMorphPath(paths, idx, dur = 650) {
   const ref = useRef(null);
-  const prevIdx = useRef(idx);
+  const prevIdxRef = useRef(idx);
   useEffect(() => {
-    if (prevIdx.current === idx || !ref.current) return;
+    if (prevIdxRef.current === idx || !ref.current) return;
     const flub = window.flubber;
     if (!flub) {
       ref.current.setAttribute("d", paths[idx]);
-      prevIdx.current = idx;
+      prevIdxRef.current = idx;
       return;
     }
     let interp;
     try {
-      interp = flub.interpolate(paths[prevIdx.current], paths[idx], { maxSegmentLength: 3 });
-    } catch (e) {
+      interp = flub.interpolate(paths[prevIdxRef.current], paths[idx], { maxSegmentLength: 3 });
+    } catch {
       ref.current.setAttribute("d", paths[idx]);
-      prevIdx.current = idx;
+      prevIdxRef.current = idx;
       return;
     }
     let raf, start = null;
@@ -63,7 +65,7 @@ function useMorphPath(paths, idx, dur = 650) {
       const e = 0.5 - 0.5 * Math.cos(Math.PI * p); // smooth in/out
       if (ref.current) ref.current.setAttribute("d", interp(e));
       if (p < 1) raf = requestAnimationFrame(tick);
-      else prevIdx.current = idx;
+      else prevIdxRef.current = idx;
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
