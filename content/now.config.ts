@@ -82,7 +82,7 @@ export const nowItems: NowItem[] = [
     period: "Q4 2025 – Q1 2026",
     start: "2025-10",
     blurb:
-      "Compared CLI agentic dev environments using lower class models (Kimi K2, Llama, Qwen, etc.) to find more cost-efficient ways for LLM-supported development.",
+      "Compared CLI AI-assisted coding environments using lower class models (Kimi K2, Llama, Qwen, etc.) to find more cost-efficient ways for LLM-supported development.",
   },
   {
     slug: "openclaw",
@@ -120,7 +120,7 @@ export const nowItems: NowItem[] = [
 export const curiousTopics: string[] = [
   "Cryptography",
   "Blockchain",
-  "Agentic development & workflows",
+  "AI-assisted coding & workflows",
   "Technical IT security",
 ];
 
