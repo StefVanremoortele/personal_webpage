@@ -24,7 +24,7 @@ export const siteUrl = "https://stefvanremoortele.be";
 
 export const profile = {
   name: "Stef Vanremoortele",
-  title: "Software Developer & Security Specialist",
+  title: "Software Engineer & Security Specialist",
   tagline:
     "Backend-oriented software engineer with an education in security, building reliable applications where architecture, security, and UX hold together.",
   location: "Oostende, Belgium",
