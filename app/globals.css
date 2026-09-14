@@ -19,7 +19,7 @@
   --era-agent: oklch(0.78 0.16 305);
   --era-agent-gradient: linear-gradient(120deg, oklch(0.82 0.17 282), oklch(0.72 0.22 318), oklch(0.78 0.18 350));
 
-  /* Booking / surface tokens */
+  /* Contact / surface tokens */
   --fg: var(--foreground);
   --muted: #9ca0a3;
   --dim: #6c6f72;
@@ -123,7 +123,7 @@ body {
   filter: blur(0);
 }
 
-/* Pulsing live dot (About data readout, Booking pill) */
+/* Pulsing live dot (About data readout, Hero status) */
 .live-dot {
   display: inline-block;
   width: 7px;
