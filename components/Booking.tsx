@@ -80,13 +80,21 @@ export function Booking() {
     <section
       id="booking"
       className="snap-section flex justify-center px-4 py-16 sm:px-8 sm:py-24"
+      style={{
+        // Soft lavender/magenta glow, echoing the hero's ambient light.
+        background:
+          "radial-gradient(ellipse 55% 45% at 50% 32%, rgba(232,121,249,0.09), transparent 70%), radial-gradient(ellipse 45% 40% at 28% 72%, rgba(165,180,252,0.07), transparent 70%)",
+      }}
     >
       <div className="w-full max-w-[1080px]">
         <header className="mx-auto mb-10 max-w-[720px] text-center sm:mb-12">
           <h2 className="mb-5 text-[34px] font-extrabold leading-none tracking-[-0.03em] sm:text-6xl md:text-[72px]">
-            Let&apos;s work together.
+            Let&apos;s work{" "}
+            <span className="bg-clip-text text-transparent" style={{ backgroundImage: "var(--accent-text)" }}>
+              together.
+            </span>
           </h2>
-          <p className="m-0 text-base leading-[1.6] text-[#c8c9ca] sm:text-[18px]">
+          <p className="m-0 text-base leading-[1.6] text-[var(--muted)] sm:text-[18px]">
             Freelance project work and architecture engagements are especially welcome.
             Reach out to discuss a practical way to work together.
           </p>
@@ -99,17 +107,23 @@ export function Booking() {
               href={option.href}
               target={option.external ? "_blank" : undefined}
               rel={option.external ? "noopener noreferrer" : undefined}
-              className="group flex min-h-[172px] flex-col rounded-[18px] border border-[var(--line)] p-4 text-[var(--fg)] no-underline transition duration-300 hover:-translate-y-1 hover:border-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)] sm:p-5"
+              className="group flex min-h-[172px] flex-col rounded-[18px] border border-[var(--line)] p-4 text-[var(--fg)] no-underline transition duration-300 hover:-translate-y-1 hover:border-[color:var(--accent-border-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)] sm:p-5"
               style={{
                 background:
                   "linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.006))",
               }}
             >
-              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.26em] text-[var(--accent)]">
+              <span
+                className="self-start bg-clip-text font-mono text-[10px] font-semibold uppercase tracking-[0.26em] text-transparent"
+                style={{ backgroundImage: "var(--accent-text)" }}
+              >
                 {option.eyebrow}
               </span>
               <div className="mt-8 flex items-stretch gap-4">
-                <span className="flex min-h-16 w-16 shrink-0 items-center justify-center rounded-[16px] bg-[var(--accent)] text-[var(--accent-contrast)] shadow-[0_0_46px_-12px_var(--glow)] ring-1 ring-white/20 transition duration-300 group-hover:scale-[1.04]">
+                <span
+                  className="flex min-h-16 w-16 shrink-0 items-center justify-center rounded-[16px] text-[var(--accent-contrast)] shadow-[0_0_46px_-12px_var(--glow)] ring-1 ring-white/20 transition duration-300 group-hover:scale-[1.04]"
+                  style={{ backgroundImage: "var(--accent-fill)" }}
+                >
                   <option.Icon className="h-8 w-8" />
                 </span>
                 <div className="min-w-0">
