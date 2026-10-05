@@ -29,8 +29,3 @@ export function getNowGroups(items: NowItem[] = nowItems): NowGroup[] {
     }))
     .filter((group) => group.entries.length > 0);
 }
-
-// Single most-recent "current" entry for the Hero badge, or null.
-export function getHeroBadgeEntry(items: NowItem[] = nowItems): NowItem | null {
-  return getCurrentEntries(items)[0] ?? null;
-}

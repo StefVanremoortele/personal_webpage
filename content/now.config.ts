@@ -126,7 +126,7 @@ export const curiousTopics: string[] = [
 
 /** Heading label + colour for each status group on the timeline. */
 export const statusDisplay: Record<NowStatus, { label: string; color: string }> = {
-  upcoming: { label: "Upcoming", color: "rgb(85, 119, 166)" },
+  upcoming: { label: "Upcoming", color: "#a5b4fc" },
   current: { label: "Right now", color: "var(--accent)" },
   past: { label: "Past", color: "var(--muted)" },
 };
@@ -135,8 +135,8 @@ export const statusDisplay: Record<NowStatus, { label: string; color: string }> 
 export const curiousDisplay = {
   label: "Curious about",
   subtitle: "things I want to dig into",
-  color: "rgb(130, 138, 153)",
+  color: "#c084fc",
 };
 
 /** Colour for all date/time strings on the timeline (e.g. "Q2 2026 – present"). */
-export const dateColor = "rgb(158, 123, 62)";
+export const dateColor = "#c4b5fd";

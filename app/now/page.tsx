@@ -75,7 +75,10 @@ function RailNode({ status }: { status: NowStatus }) {
 
 function NowCard({ item, showPeriod }: { item: NowItem; showPeriod: boolean }) {
   return (
-    <article className="rounded-[18px] border border-[var(--line)] p-5 sm:p-6">
+    <article
+      className="rounded-[18px] border border-[var(--line)] p-5 sm:p-6"
+      style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.006))" }}
+    >
       <header className="mb-3 flex items-start justify-between gap-x-4">
         <h3 className="min-w-0 text-lg font-bold tracking-[-0.01em] sm:text-xl">{item.topic}</h3>
         {showPeriod && (
@@ -192,7 +195,14 @@ export default function NowPage() {
 
   return (
     <>
-      <main className="flex-1 px-5 py-16 sm:px-10 sm:py-24">
+      <main
+        className="flex-1 px-5 py-16 sm:px-10 sm:py-24"
+        style={{
+          // Soft lavender/magenta glow at the top, echoing the hero and contact section.
+          background:
+            "radial-gradient(900px 520px at 50% 0, rgba(232,121,249,0.08), transparent 70%), radial-gradient(700px 480px at 20% 10%, rgba(165,180,252,0.06), transparent 70%)",
+        }}
+      >
         <div className="mx-auto w-full max-w-2xl">
           <Link
             href="/"

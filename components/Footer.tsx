@@ -1,5 +1,4 @@
 import { profile } from "@/content/site";
-import { ThemeToggle } from "./ThemeToggle";
 
 function GitHubIcon({ className }: { className?: string }) {
   return (
@@ -45,7 +44,6 @@ export function Footer() {
           >
             <LinkedInIcon className="h-4 w-4" />
           </a>
-          <ThemeToggle />
         </div>
       </div>
     </footer>
