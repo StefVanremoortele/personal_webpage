@@ -1,3 +1,4 @@
+// Archived design prototype. Current public experience copy lives in content/site.ts.
 // Experience timeline with era-coded entries (DEV → SEC → AGENT).
 // Older entries marked [placeholder] — replace with real history.
 const { useState, useEffect, useRef } = React;
@@ -73,18 +74,18 @@ const GLYPH_PATHS = {
 
 function useMorphPath(eraKey, dur = 600) {
   const ref = useRef(null);
-  const prevKey = useRef(eraKey);
+  const prevKeyRef = useRef(eraKey);
   useEffect(() => {
-    if (prevKey.current === eraKey || !ref.current) return;
+    if (prevKeyRef.current === eraKey || !ref.current) return;
     const flub = window.flubber;
     if (!flub) {
       ref.current.setAttribute("d", GLYPH_PATHS[eraKey]);
-      prevKey.current = eraKey;
+      prevKeyRef.current = eraKey;
       return;
     }
     let interp;
-    try { interp = flub.interpolate(GLYPH_PATHS[prevKey.current], GLYPH_PATHS[eraKey], { maxSegmentLength: 3 }); }
-    catch { ref.current.setAttribute("d", GLYPH_PATHS[eraKey]); prevKey.current = eraKey; return; }
+    try { interp = flub.interpolate(GLYPH_PATHS[prevKeyRef.current], GLYPH_PATHS[eraKey], { maxSegmentLength: 3 }); }
+    catch { ref.current.setAttribute("d", GLYPH_PATHS[eraKey]); prevKeyRef.current = eraKey; return; }
     let raf, start = null;
     const tick = (t) => {
       if (!start) start = t;
@@ -92,7 +93,7 @@ function useMorphPath(eraKey, dur = 600) {
       const e = 0.5 - 0.5 * Math.cos(Math.PI * p);
       if (ref.current) ref.current.setAttribute("d", interp(e));
       if (p < 1) raf = requestAnimationFrame(tick);
-      else prevKey.current = eraKey;
+      else prevKeyRef.current = eraKey;
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
