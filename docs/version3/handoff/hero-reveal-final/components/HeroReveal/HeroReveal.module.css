@@ -8,10 +8,6 @@
   --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  /* Scale unit: 1vw on tall screens, limited by the height on wide-but-short ones (laptops),
-     so the whole intro fits in one viewport without scrolling. */
-  --u: min(1vw, 1.3svh);
-  --pad: clamp(24px, calc(8 * var(--u)), 96px);
 
   position: relative;
   isolation: isolate;
@@ -19,11 +15,10 @@
   min-height: 100svh;
   display: grid;
   place-items: center;
-  padding: var(--pad) 24px;
+  padding: clamp(48px, 8vw, 96px) 24px;
   background: var(--bg);
   color: var(--fg);
-  /* The site's next/font JetBrains Mono (app/layout.tsx) exposes --font-jetbrains-mono. */
-  font-family: var(--font-jetbrains-mono), 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace);
 }
 
 .stage {
@@ -31,7 +26,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: clamp(12px, calc(2.4 * var(--u)), 32px);
+  gap: clamp(20px, 2.4vw, 32px);
   max-width: 1200px;
   width: 100%;
   animation: drift 16s var(--ease-io) both;
@@ -39,27 +34,21 @@
 
 /* ---------- ambient glow ---------- */
 .glow { position: absolute; inset: 0; z-index: -1; pointer-events: none; animation: fadeIn 1.2s var(--ease-out) both; }
-/* Each glow breathes (scale + opacity) while lavender and magenta drift into each other and apart again.
-   The drift period doesn't match the breath, so the mix never visibly repeats. */
 .glow span {
   position: absolute;
   width: 60vmax; height: 60vmax;
   border-radius: 50%;
   translate: -50% -50%;
-  animation: orbit 19s ease-in-out infinite alternate, breathe 7s ease-in-out infinite;
+  animation: orbit 14s ease-in-out infinite alternate;
 }
-.glow span:nth-child(1) { left: 32%; top: 34%; --dx: 9vmax; --dy: 3vmax; background: radial-gradient(closest-side, rgba(165,180,252,0.22), transparent); }
-.glow span:nth-child(2) { left: 68%; top: 40%; --dx: -9vmax; --dy: -2vmax; background: radial-gradient(closest-side, rgba(232,121,249,0.2), transparent); animation-delay: -6s, -1s; }
-.glow span:nth-child(3) { left: 50%; top: 78%; --dx: 4vmax; --dy: -3vmax; background: radial-gradient(closest-side, rgba(244,114,182,0.12), transparent); animation-duration: 23s, 9s; animation-delay: -9s, -4s; }
-@keyframes breathe {
-  0%, 100% { scale: 0.82; opacity: 0.5; }
-  50%      { scale: 1.15; opacity: 1; }
-}
+.glow span:nth-child(1) { left: 32%; top: 34%; background: radial-gradient(closest-side, rgba(165,180,252,0.18), transparent); }
+.glow span:nth-child(2) { left: 68%; top: 40%; background: radial-gradient(closest-side, rgba(232,121,249,0.16), transparent); animation-delay: -5s; }
+.glow span:nth-child(3) { left: 50%; top: 78%; background: radial-gradient(closest-side, rgba(244,114,182,0.12), transparent); animation-delay: -9s; }
 
 /* ---------- avatar ---------- */
 .avatar {
   position: relative;
-  width: clamp(104px, calc(14 * var(--u)), 240px);
+  width: clamp(140px, 14vw, 240px);
   aspect-ratio: 1;
   animation: pop 1.1s var(--ease-back) 0.2s both;
 }
@@ -130,7 +119,7 @@
   margin: 0;
   display: flex; align-items: center; gap: 16px;
   min-height: 1.4em;
-  font-size: clamp(13px, calc(1.5 * var(--u)), 28px);
+  font-size: clamp(14px, 1.5vw, 28px);
   font-weight: 500;
   letter-spacing: 0.32em;
   text-transform: uppercase;
@@ -150,7 +139,7 @@
 /* ---------- name ---------- */
 .name {
   margin: 0;
-  font-size: clamp(36px, calc(7.1 * var(--u)), 136px);
+  font-size: clamp(40px, 7.1vw, 136px);
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: 0.01em;
@@ -158,24 +147,92 @@
   animation: sharpen 1.2s var(--ease-out) 0.8s both;
 }
 
-/* ---------- timeline / CTA row (stacked in one grid cell) ---------- */
-.endRow { display: grid; justify-items: center; align-items: center; width: 100%; margin-top: clamp(16px, calc(5 * var(--u)), 72px); }
+/* ---------- highlight / CTA slot (stacked in one grid cell) ---------- */
+.slot { display: grid; justify-items: center; margin-top: clamp(24px, 4vw, 56px); width: 100%; }
+.roller { grid-area: 1 / 1; }
+.endRow { display: grid; justify-items: center; align-items: center; width: 100%; margin-top: clamp(28px, 3.5vw, 56px); }
 .endRow > .timeline, .endRow > .actions { grid-area: 1 / 1; }
 .endRow > .timeline { margin-top: 0; }
 
+/* Company roller: one pill, letters roll up split-flap style, width morphs between names. */
+.roller {
+  position: relative; overflow: hidden; align-items: center;
+  opacity: 0; transform: translateY(16px) scale(0.96); filter: blur(6px);
+  transition: opacity 1000ms var(--ease-out), transform 1000ms var(--ease-out), filter 1000ms var(--ease-out);
+  pointer-events: none;
+}
+.roller[data-on] { opacity: 1; transform: none; filter: none; }
+/* First company rolls in once the pill has mostly arrived. */
+.word[data-first][data-state='active'] > span { transition-delay: calc(350ms + var(--k) * 14ms); transition-duration: 500ms; }
+.hero[data-summary] .roller { transition-delay: 200ms; transition-duration: 300ms; }
+.hero[data-done] .roller { opacity: 0; transform: scale(0.96); transition-duration: 250ms; }
+.window {
+  position: relative; display: block;
+  width: calc(var(--len) * 1ch); height: 1.45em;
+  font-size: 1.4em; font-weight: 700; color: var(--fg);
+  overflow: hidden;
+  transition: width 360ms var(--ease-io);
+}
+.word { position: absolute; left: 0; top: 0; display: flex; white-space: pre; line-height: 1.45em; }
+.word > span {
+  display: inline-block; width: 1ch; text-align: center;
+  transform: translateY(100%); opacity: 0; filter: blur(3px);
+  transition: transform 360ms var(--ease-out), opacity 360ms var(--ease-out), filter 360ms var(--ease-out);
+  transition-delay: calc(var(--k) * 14ms);
+}
+.word[data-state='active'] > span { transform: none; opacity: 1; filter: none; }
+.word[data-state='past'] > span {
+  transform: translateY(-100%); opacity: 0; filter: blur(3px);
+  transition-duration: 300ms; transition-timing-function: var(--ease-io);
+}
+.roller .dot[data-beat] { animation: beat 600ms var(--ease-io); }
+.sheen {
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(100deg, transparent 38%, rgba(232,121,249,0.16) 50%, transparent 62%);
+  background-size: 250% 100%; background-position: 120% 0;
+  animation: sheen 800ms var(--ease-io) 100ms both;
+}
+@keyframes beat { 50% { box-shadow: 0 0 0 0.32em rgba(192,132,252,0.12), 0 0 18px rgba(232,121,249,0.8); } }
+@keyframes sheen { to { background-position: -20% 0; } }
+
+.chip {
+  display: inline-flex; align-items: center; flex-wrap: wrap; justify-content: center;
+  gap: 8px 18px;
+  padding: clamp(14px, 1.2vw, 22px) clamp(20px, 1.9vw, 36px);
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.03);
+  font-size: clamp(14px, 1.56vw, 30px);
+  color: var(--fg-2);
+  text-decoration: none;
+}
+.dot { width: 0.47em; height: 0.47em; border-radius: 50%; background: #c084fc; box-shadow: 0 0 0 0.2em rgba(192,132,252,0.18); }
+.label {
+  font-size: 0.73em; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+  background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.sep { color: rgba(255,255,255,0.2); }
+.text { color: var(--fg); }
+.arrow { color: var(--fg-3); transition: translate 140ms var(--ease-out); }
+
 .actions {
   display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
-  gap: clamp(12px, calc(1.25 * var(--u)), 24px);
+  gap: clamp(12px, 1.25vw, 24px);
   visibility: hidden;
 }
 .hero[data-done] .actions { visibility: visible; }
-/* ---------- "Get in contact": morph in, then light border + float + shine (it stays put; no cursor follow) ---------- */
-.ctaWrap { display: flex; flex-direction: column; align-items: center; gap: 22px; }
-.hero[data-done] .ctaWrap { animation: morphIn 1.6s var(--ease-expo) var(--cta-delay, 0.25s) both; }
+/* ---------- "Get in contact": settle in, then light border + float + shine + magnetic pull ---------- */
+.ctaMagnet {
+  --mx: 0px; --my: 0px;
+  display: flex; flex-direction: column; align-items: center; gap: 22px;
+  transform: translate(var(--mx), var(--my));
+  transition: transform 380ms var(--ease-out);
+}
+.hero[data-done] .ctaMagnet { animation: morphIn 1.6s var(--ease-expo) var(--cta-delay, 0.25s) both; }
 @keyframes morphIn {
-  0%   { opacity: 0; transform: scale(0.2, 0.55); filter: blur(6px); }
+  0%   { opacity: 0; transform: translate(var(--mx), var(--my)) scale(0.2, 0.55); filter: blur(6px); }
   30%  { opacity: 1; }
-  100% { opacity: 1; transform: none; filter: none; }
+  100% { opacity: 1; transform: translate(var(--mx), var(--my)) scale(1); filter: none; }
 }
 .ctaFloat { position: relative; display: flex; }
 .hero[data-done] .ctaFloat { animation: float 3.6s ease-in-out calc(var(--cta-delay, 0.4s) + 1.4s) infinite; }
@@ -183,9 +240,10 @@
   position: relative; display: flex; padding: 3px; border-radius: 999px; overflow: hidden;
   background: rgba(255,255,255,0.06); text-decoration: none;
   box-shadow: 0 12px 60px rgba(232,121,249,0.45);
-  transition: scale 140ms var(--ease-back);
+  transition: box-shadow 300ms var(--ease-out), scale 140ms var(--ease-back);
 }
 .hero[data-done] .ctaRing { animation: pulse 3s ease-in-out calc(var(--cta-delay, 0.4s) + 1.8s) infinite; }
+.ctaMagnet[data-near] .ctaRing { box-shadow: 0 16px 80px rgba(232,121,249,0.75); animation-play-state: paused; }
 .ctaRing:active { scale: 0.97; }
 .ctaRing:focus-visible { outline: 2px solid #e879f9; outline-offset: 6px; }
 .ctaSpin {
@@ -196,13 +254,17 @@
 .hero[data-done] .ctaSpin { animation: fadeIn 1s var(--ease-out) calc(var(--cta-delay, 0.4s) + 1.4s) both, spin 3.2s linear infinite; }
 .cta {
   position: relative; overflow: hidden;
-  display: flex; align-items: center;
-  padding: clamp(14px, calc(1.35 * var(--u)), 26px) clamp(28px, calc(2.7 * var(--u)), 52px);
+  display: flex; align-items: center; gap: 0;
+  padding: clamp(16px, 1.35vw, 26px) clamp(28px, 2.7vw, 52px);
   border-radius: 999px;
   background: linear-gradient(90deg, #c4b5fd 0%, #e879f9 55%, #f9a8d4 100%);
-  color: #111; font-weight: 700; font-size: clamp(15px, calc(1.67 * var(--u)), 32px);
+  color: #111; font-weight: 700; font-size: clamp(15px, 1.67vw, 32px);
+  transition: gap 300ms var(--ease-out);
 }
 .ctaLabel { position: relative; }
+.ctaArrow { position: relative; display: inline-block; width: 0; overflow: hidden; opacity: 0; transition: width 300ms var(--ease-out), opacity 300ms; }
+.ctaMagnet[data-near] .cta { gap: 0.5em; }
+.ctaMagnet[data-near] .ctaArrow { width: 1.2ch; opacity: 1; }
 .ctaSheen {
   position: absolute; top: 0; bottom: 0; left: 0; width: 27%;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.75), transparent);
@@ -219,40 +281,30 @@
 @keyframes sheenSweep { 0%, 55% { transform: translateX(-160%) skewX(-20deg); } 100% { transform: translateX(400%) skewX(-20deg); } }
 
 /* ---------- career timeline ---------- */
-/* Mobile camera inputs (see the mobile block). Registered so they can transition; everything else derives from them. */
-@property --hr-m { syntax: '<number>'; inherits: true; initial-value: 0; }
-@property --hr-z { syntax: '<number>'; inherits: true; initial-value: 0; }
-.rail { display: contents; }
 /* During the hold after the last company, every role stays lit so the whole career can be read. */
 .hero[data-summary] .fill { opacity: 0.75; }
 .hero[data-summary] .segLabel { color: var(--fg); opacity: 1; }
 .timeline {
   position: relative;
   width: min(1600px, 100% - 48px);
-  /* Lanes, top to bottom: category labels, company name, track (centre line --y), year labels.
-     All in em, so the timeline scales with its font. */
-  --y: calc(4.9em + 14px);
-  height: calc(var(--y) + 1.35em + 26px);
-  margin-top: clamp(12px, calc(3.5 * var(--u)), 56px);
-  font-size: clamp(12px, calc(1.35 * var(--u)), 26px);
+  height: 140px;
+  margin-top: clamp(28px, 3.5vw, 56px);
+  font-size: clamp(13px, 1.35vw, 26px);
   animation: fadeIn 0.6s var(--ease-out) 1.4s both;
   transition: opacity 600ms var(--ease-io), transform 600ms var(--ease-io), visibility 0s linear 0s;
 }
 /* End: the timeline collapses toward its center (scaleX 0.15, scaleY 0.5, blur) while the CTA expands out of the same spot. */
 .hero[data-done] .timeline {
-  /* Keyframes, not transitions: they take over cleanly from the fadeIn entrance (a transition would skip the fade). */
-  animation: collapseX 800ms var(--ease-io) both, collapseFade 600ms var(--ease-io) 250ms both, collapseBlur 600ms var(--ease-io) 200ms both;
+  opacity: 0; transform: scale(0.15, 0.5); filter: blur(4px); visibility: hidden;
+  transition: transform 800ms var(--ease-io), opacity 600ms var(--ease-io) 250ms, filter 600ms var(--ease-io) 200ms, visibility 0s linear 850ms;
+  animation: none;
 }
-@keyframes collapseX { from { transform: none; } to { transform: scale(0.15, 0.5); } }
-@keyframes collapseY { from { transform: none; } to { transform: scale(0.55, 0.15); } }
-@keyframes collapseFade { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
-@keyframes collapseBlur { from { filter: none; } to { filter: blur(4px); } }
 .track {
-  position: absolute; left: 0; right: 0; top: calc(var(--y) - 1.5px); height: 3px; border-radius: 3px;
+  position: absolute; left: 0; right: 0; top: 3.2em; height: 3px; border-radius: 3px;
   background: rgba(255,255,255,0.12);
   transform-origin: left; animation: grow 1.2s var(--ease-io) 1.6s both;
 }
-.seg { position: absolute; left: var(--a); width: var(--w); top: 0; height: calc(var(--y) + 8px); animation: fadeIn 0.6s var(--ease-out) calc(2s + var(--i) * 150ms) both; }
+.seg { position: absolute; left: var(--a); width: var(--w); top: 0; height: 4em; animation: fadeIn 0.6s var(--ease-out) calc(2s + var(--i) * 150ms) both; }
 .segLabel {
   position: absolute; left: 50%; top: 0; translate: -50% 0;
   white-space: nowrap; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
@@ -260,7 +312,7 @@
   transition: color 500ms var(--ease-out), opacity 500ms var(--ease-out), translate 500ms var(--ease-out);
 }
 .bar {
-  position: absolute; left: 4px; right: 4px; top: calc(var(--y) - 5px); height: 10px; border-radius: 999px;
+  position: absolute; left: 4px; right: 4px; top: calc(3.25em - 5px); height: 10px; border-radius: 999px;
   background: rgba(255,255,255,0.16);
   transition: height 500ms var(--ease-out), top 500ms var(--ease-out);
 }
@@ -271,98 +323,36 @@
   opacity: 0; transition: opacity 500ms var(--ease-out), box-shadow 500ms var(--ease-out);
 }
 .seg[data-active] .segLabel { color: var(--fg); opacity: 1; translate: -50% -4px; }
-.seg[data-active] .bar { height: 16px; top: calc(var(--y) - 8px); }
+.seg[data-active] .bar { height: 16px; top: calc(3.25em - 8px); }
 .fill[data-active] { opacity: 1; box-shadow: 0 0 0 1px var(--bg), 0 0 24px rgba(232,121,249,0.5); }
 
 .tick {
-  position: absolute; left: var(--a); top: calc(var(--y) - 15px); width: 3px; height: 30px; margin-left: -1.5px; border-radius: 2px;
+  position: absolute; left: var(--a); top: calc(3.25em - 15px); width: 3px; height: 30px; margin-left: -1.5px; border-radius: 2px;
   background: rgba(255,255,255,0.28);
 }
 .tick > span { position: absolute; top: 40px; left: 50%; translate: -50% 0; color: var(--fg-2); white-space: nowrap; }
-/* Job change within a category: a quiet notch, no year. */
-.tick[data-minor] { top: calc(var(--y) - 9px); width: 2px; height: 18px; margin-left: -1px; background: rgba(255,255,255,0.14); }
 .now { background: #e879f9; }
 .now > span { color: #e879f9; }
 .marker {
-  position: absolute; left: var(--a); top: calc(var(--y) - 14px); width: 28px; height: 28px; margin-left: -14px; border-radius: 50%;
+  position: absolute; left: var(--a); top: calc(3.25em - 14px); width: 28px; height: 28px; margin-left: -14px; border-radius: 50%;
   background: #fff; opacity: 0;
   box-shadow: 0 0 0 6px rgba(232,121,249,0.25), 0 0 24px rgba(232,121,249,0.8);
   transition: left 360ms var(--ease-io), opacity 300ms var(--ease-out);
 }
 .marker[data-on] { opacity: 1; animation: halo 1.6s ease-in-out infinite; }
-/* A hairline stem from the marker up to the company name, like a pin. Gone once the marker heads to Now. */
-.marker::before {
-  content: ''; position: absolute; left: 50%; bottom: calc(100% + 4px); width: 1px; height: 0.75em; margin-left: -0.5px;
-  background: linear-gradient(to top, rgba(255,255,255,0.8), transparent);
-  transition: opacity 300ms var(--ease-out);
-}
-.hero[data-summary] .marker::before { opacity: 0; }
-
-/* Company: one label per role over its own stretch of the timeline; only the active one shows.
-   It rises and sharpens in as the marker lands (140ms delay ≈ the end of its glide) and drifts up and out for the next. */
-.company {
-  position: absolute; top: 1.9em;
-  /* Centred on its role but kept inside the timeline: the name is 1.45em JetBrains Mono (0.6em per letter),
-     so half its width is len × 0.435em. (Not `ch`, which can resolve against the fallback font.) */
-  left: clamp(calc(var(--len) * 0.435em), var(--a), calc(100% - var(--len) * 0.435em));
-  /* Centring (--cx/--cy) and the enter/leave offset (--rise) share one transform:
-     the CSS build drops a separate `translate` declared next to `transform`. */
-  --cx: -50%; --cy: 0%; --rise: 0.4em;
-  transform: translate(var(--cx), calc(var(--cy) + var(--rise)));
-  white-space: nowrap; pointer-events: none;
-  opacity: 0; filter: blur(4px);
-  transition: opacity 300ms var(--ease-io), transform 300ms var(--ease-io), filter 300ms var(--ease-io);
-}
-.company[data-state='active'] {
-  --rise: 0em; opacity: 1; filter: none;
-  transition: opacity 360ms var(--ease-out) 140ms, transform 360ms var(--ease-out) 140ms, filter 360ms var(--ease-out) 140ms;
-}
-.company[data-state='past'] { --rise: -0.4em; }
-.companyKicker { display: none; }
-.companyName { display: block; font-size: 1.45em; font-weight: 700; line-height: 1.2; color: var(--fg); }
 
 /* ---------- mobile: vertical timeline (2015 top → now bottom) ---------- */
 @media (max-width: 640px) {
   .actions { flex-direction: column; }
+  /* Long company names must fit: shrink so --len characters fit the viewport. */
+  .window { font-size: min(1.4em, calc((100vw - 120px) / (var(--len) * 0.6))); transition: width 360ms var(--ease-io), font-size 360ms var(--ease-io); }
 
-  /* The column fills the screen and the timeline takes the height left over (up to 400px),
-     so avatar, name and timeline fit without scrolling the page. */
-  .hero { place-items: stretch; --pad: clamp(48px, 8vw, 96px); }
-  .stage { min-height: calc(100svh - 2 * var(--pad)); justify-content: center; gap: 20px; }
-  .avatar { width: 140px; }
-  .eyebrow { font-size: 14px; }
-  .name { font-size: 40px; }
-
-  .endRow { margin-top: 28px; flex: 1 1 auto; min-height: 180px; max-height: 400px; grid-template-rows: minmax(0, 1fr); }
-  .timeline { --x: 76px; width: min(360px, 100%); height: auto; align-self: stretch; font-size: 13px; }
-  /* Camera: the timeline is laid out roomy (--py per year) on a tall rail, seen through the timeline box as a window.
-     The rail slides so the marker stays on the --focus line (clamped so 2015 and Now never leave a gap), and what has
-     been shown scrolls up into a fade. During the hold (--hr-z → 1) the rail zooms out until the career (from --cut,
-     the first job, to Now) fills the window; the studies before it fade out above the top edge.
-     --hr-m (marker %, set by the component) and --hr-z animate; every position below follows them. */
-  .timeline {
-    --py: 96px; --edge: 24px; --focus: 45%; --fade: 22%;
-    --full: calc(var(--years) * var(--py));
-    --fit: calc((100% - 2 * var(--edge)) * 100 / (100 - var(--cut)));
-    --h: calc(var(--full) + (var(--fit) - var(--full)) * var(--hr-z));
-    --follow: clamp(calc(100% - var(--full) - var(--edge)), calc(var(--focus) - var(--hr-m) * var(--full) / 100), var(--edge));
-    --ty: calc(var(--follow) + (var(--edge) - var(--cut) * var(--fit) / 100 - var(--follow)) * var(--hr-z));
-    overflow: hidden;
-    /* Fade only where the rail runs past the window, so 2015 at the start and Now at the end stay crisp;
-       in the recap the top fade shrinks to a short cut just above the first job's year. */
-    mask-image: linear-gradient(to bottom,
-      transparent, #000 min(calc(var(--fade) + (14px - var(--fade)) * var(--hr-z)), max(0px, -1 * var(--ty))),
-      #000 calc(100% - min(var(--fade), max(0px, var(--ty) + var(--h) - 100%))), transparent);
-    transition: opacity 600ms var(--ease-io), transform 600ms var(--ease-io), visibility 0s linear 0s,
-      --hr-m 550ms var(--ease-io), --hr-z 800ms var(--ease-io);
-  }
-  .hero[data-summary] .timeline { --hr-z: 1; }
-  /* Keyframes, not a transition: the segment's entrance animation still holds its opacity. */
-  .hero[data-summary] .seg[data-cut] { animation: collapseFade 500ms var(--ease-io) both; }
-  .rail { display: block; position: absolute; left: 0; right: 0; top: var(--ty); height: var(--h); }
-  .actions { align-self: center; }
+  /* Company pill sits BELOW the timeline on mobile. */
+  .endRow { order: 1; margin-top: 28px; }
+  .timeline { --x: 84px; width: min(360px, 100% - 32px); height: 400px; font-size: 13px; }
+  .slot { order: 2; margin-top: 28px; }
   /* Collapse toward the vertical center; the CTA morphs out of that spot. */
-  .hero[data-done] .timeline { animation-name: collapseY, collapseFade, collapseBlur; }
+  .hero[data-done] .timeline { transform: scale(0.55, 0.15); }
   .track { left: calc(var(--x) - 1.5px); right: auto; top: 0; bottom: 0; width: 3px; height: auto; transform-origin: top; animation-name: growY; }
   .seg { left: 0; right: 0; width: auto; top: var(--a); height: var(--w); }
   .bar { left: calc(var(--x) - 5px); right: auto; top: 3px; bottom: 3px; width: 10px; height: auto; transition: width 500ms var(--ease-out), left 500ms var(--ease-out); }
@@ -373,27 +363,7 @@
   .seg[data-active] .segLabel { translate: 4px -50%; }
   .tick { left: calc(var(--x) - 11px); top: var(--a); width: 22px; height: 3px; margin: -1.5px 0 0; }
   .tick > span { left: auto; right: 34px; top: 50%; translate: 0 -50%; }
-  .tick[data-minor] { left: calc(var(--x) - 7px); top: var(--a); width: 14px; height: 2px; margin: -1px 0 0; }
-  .marker { left: calc(var(--x) - 11px); top: calc(var(--hr-m) * 1%); width: 22px; height: 22px; margin: -11px 0 0; transition: opacity 300ms var(--ease-out); }
-  .marker::before { display: none; }
-  /* The company sits right of the marker under its category name; the active category's own label steps aside for it
-     (except during the hold, when every label is lit). */
-  .company { left: calc(var(--x) + 22px); right: 0; top: var(--a); --cx: 0%; --cy: -50%; white-space: normal; text-align: left; }
-  .companyKicker {
-    display: block; margin-bottom: 2px;
-    font-size: 0.85em; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
-    background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .companyName { font-size: 1.15em; line-height: 1.25; text-wrap: balance; }
-  .company[data-state='active'] { transition-delay: 200ms; }
-  .hero:not([data-summary]) .seg[data-active] .segLabel { opacity: 0; }
-}
-/* Short phones (e.g. 360×640, iPhone SE): tighten the spacing so the timeline keeps a readable height. */
-@media (max-width: 640px) and (max-height: 720px) {
-  .hero { --pad: 24px; }
-  .stage { gap: 12px; }
-  .avatar { width: 108px; }
-  .endRow { margin-top: 14px; }
+  .marker { left: calc(var(--x) - 11px); top: var(--a); width: 22px; height: 22px; margin: -11px 0 0; transition: top 360ms var(--ease-io), opacity 300ms var(--ease-out); }
 }
 @keyframes growY { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 
@@ -417,6 +387,4 @@
 @media (prefers-reduced-motion: reduce) {
   .hero *, .hero *::before, .hero *::after, .stage, .glow { animation: none !important; transition: none !important; }
   .ring { opacity: 1; }
-  .timeline { visibility: hidden; }
-  .actions { visibility: visible; }
 }
