@@ -1,1 +1,1 @@
-npm run deploy:tryptamine
+npm run deploy

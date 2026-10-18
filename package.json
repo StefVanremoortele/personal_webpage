@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "deploy:tryptamine": "./scripts/publish-tryptamine.sh",
+    "deploy": "./scripts/publish.sh",
     "start": "next start",
     "lint": "eslint"
   },
