@@ -1,0 +1,39 @@
+# Build on the self-hosted homelab builder and deploy to the apps host.
+# Only main and manual runs: this repo is public, so never run on pull_request.
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  IMAGE: 192.168.1.204:5000/personal-webpage
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, builder]
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t "$IMAGE:${GITHUB_SHA::12}" -t "$IMAGE:latest" .
+
+      - name: Push to builder registry
+        run: |
+          docker push "$IMAGE:${GITHUB_SHA::12}"
+          docker push "$IMAGE:latest"
+
+      - name: Deploy to apps
+        run: ssh -i ~/.ssh/deploy_ed25519 -o BatchMode=yes deploy@192.168.1.210 deploy-app personal-webpage
+
+      - name: Health check
+        run: curl -fsS --retry 5 --retry-delay 2 -o /dev/null http://192.168.1.210:8002/
