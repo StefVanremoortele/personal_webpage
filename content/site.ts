@@ -2,7 +2,7 @@ export type Era = "dev" | "sec" | "agent";
 
 export type NowStatus = "past" | "current" | "upcoming";
 
-export const siteUrl = "https://stefvanremoortele.be";
+export const siteUrl = "https://stef.vanremoortele.be";
 
 export const profile = {
   name: "Stef Vanremoortele",

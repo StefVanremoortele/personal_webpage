@@ -6,7 +6,7 @@ import { writeFileSync } from "node:fs";
 const NAME = "Stef Vanremoortele";
 const TITLE = "Software Engineer & Security Specialist";
 const escapeXml = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-const URL = "stefvanremoortele.be";
+const URL = "stef.vanremoortele.be";
 
 const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
