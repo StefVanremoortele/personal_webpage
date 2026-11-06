@@ -36,4 +36,4 @@ jobs:
         run: ssh -i ~/.ssh/deploy_ed25519 -o BatchMode=yes deploy@10.10.10.10 deploy-app personal-webpage "${GITHUB_SHA::12}"
 
       - name: Health check
-        run: curl -fsS --retry 5 --retry-delay 2 -o /dev/null http://10.10.10.10:8002/
+        run: curl -fsS --connect-timeout 5 --max-time 15 --retry 5 --retry-delay 2 -o /dev/null https://stef.vanremoortele.be/
